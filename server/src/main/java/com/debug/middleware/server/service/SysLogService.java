@@ -17,6 +17,7 @@ import java.util.Date;
 
 /**
  * 系统日志服务
+ *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/7 19:07
  **/
@@ -24,21 +25,23 @@ import java.util.Date;
 @EnableAsync
 public class SysLogService {
     //定义日志
-    private static final Logger log= LoggerFactory.getLogger(SysLogService.class);
+    private static final Logger log = LoggerFactory.getLogger(SysLogService.class);
     //定义系统日志操作接口Mapper
     @Autowired
     private SysLogMapper sysLogMapper;
     //定义Json序列化和反序列化组件
     @Autowired
     private ObjectMapper objectMapper;
+
     /**
      * 记录用户登录成功的信息入数据库
+     *
      * @param dto
      */
     @Async
-    public void recordLog(UserLoginDto dto){
+    public void recordLog(UserLoginDto dto) {
         try {
-            SysLog entity=new SysLog();
+            SysLog entity = new SysLog();
             entity.setUserId(dto.getUserId());
             entity.setModule("用户登录模块");
             entity.setData(objectMapper.writeValueAsString(dto));
@@ -47,8 +50,8 @@ public class SysLogService {
 
             //插入数据库
             sysLogMapper.insertSelective(entity);
-        }catch (Exception e){
-            log.error("系统日志服务-记录用户登录成功的信息入数据库-发生异常：{} ",dto,e.fillInStackTrace());
+        } catch (Exception e) {
+            log.error("系统日志服务-记录用户登录成功的信息入数据库-发生异常：{} ", dto, e.fillInStackTrace());
         }
     }
 }

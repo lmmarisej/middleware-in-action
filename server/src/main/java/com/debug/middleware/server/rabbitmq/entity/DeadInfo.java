@@ -13,7 +13,7 @@ import java.io.Serializable;
  **/
 @Data
 @ToString
-public class DeadInfo implements Serializable{
+public class DeadInfo implements Serializable {
 
     private Integer id;
     private String msg;

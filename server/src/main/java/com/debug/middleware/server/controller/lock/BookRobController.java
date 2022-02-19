@@ -16,30 +16,32 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 书籍抢购Controller
+ *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/21 23:31
  **/
 @RestController
 public class BookRobController {
     //定义日志
-    private static final Logger log= LoggerFactory.getLogger(BookRobController.class);
+    private static final Logger log = LoggerFactory.getLogger(BookRobController.class);
     //定义请求前缀
-    private static final String prefix="book/rob";
+    private static final String prefix = "book/rob";
     //定义核心逻辑处理服务类
     @Autowired
     private BookRobService bookRobService;
 
     /**
      * 用户抢购书籍请求
+     *
      * @param dto
      * @return
      */
-    @RequestMapping(value = prefix+"/request",method = RequestMethod.GET)
-    public BaseResponse takeMoney(BookRobDto dto){
-        if (Strings.isNullOrEmpty(dto.getBookNo()) || dto.getUserId()==null || dto.getUserId()<=0){
+    @RequestMapping(value = prefix + "/request", method = RequestMethod.GET)
+    public BaseResponse takeMoney(BookRobDto dto) {
+        if (Strings.isNullOrEmpty(dto.getBookNo()) || dto.getUserId() == null || dto.getUserId() <= 0) {
             return new BaseResponse(StatusCode.InvalidParams);
         }
-        BaseResponse response=new BaseResponse(StatusCode.Success);
+        BaseResponse response = new BaseResponse(StatusCode.Success);
         try {
             //不加锁的情况
             //bookRobService.robWithNoLock(dto);
@@ -49,8 +51,8 @@ public class BookRobController {
 
             //加Redisson分布式锁的情况
             bookRobService.robWithRedisson(dto);
-        }catch (Exception e){
-            response=new BaseResponse(StatusCode.Fail.getCode(),e.getMessage());
+        } catch (Exception e) {
+            response = new BaseResponse(StatusCode.Fail.getCode(), e.getMessage());
         }
         return response;
     }

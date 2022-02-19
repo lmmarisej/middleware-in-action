@@ -13,7 +13,7 @@ import java.io.Serializable;
  **/
 @Data
 @ToString
-public class Fruit implements Serializable{
+public class Fruit implements Serializable {
 
     private String name;
     private String color;

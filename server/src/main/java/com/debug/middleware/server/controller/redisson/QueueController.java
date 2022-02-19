@@ -18,30 +18,32 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Redisson的队列Controller
+ *
  * @Author:debug (SteadyJack)
  * @Date: 2019/5/2 11:01
  **/
 @RestController
 public class QueueController {
     //定义日志
-    private static final Logger log= LoggerFactory.getLogger(QueueController.class);
+    private static final Logger log = LoggerFactory.getLogger(QueueController.class);
     //定义发送请求的前缀url
-    private static final String prefix="queue";
+    private static final String prefix = "queue";
     //定义发送日志的队列生产者实例
     @Autowired
     private QueuePublisher queuePublisher;
 
     /**
      * 发送消息
+     *
      * @param msg
      */
-    @RequestMapping(value = prefix+"/basic/msg/send",method = RequestMethod.GET)
-    public BaseResponse sendBasicMsg(@RequestParam String msg){
-        BaseResponse response=new BaseResponse(StatusCode.Success);
+    @RequestMapping(value = prefix + "/basic/msg/send", method = RequestMethod.GET)
+    public BaseResponse sendBasicMsg(@RequestParam String msg) {
+        BaseResponse response = new BaseResponse(StatusCode.Success);
         try {
             queuePublisher.sendBasicMsg(msg);
-        }catch (Exception e){
-            response=new BaseResponse(StatusCode.Fail.getCode(),e.getMessage());
+        } catch (Exception e) {
+            response = new BaseResponse(StatusCode.Fail.getCode(), e.getMessage());
         }
         return response;
     }
@@ -51,24 +53,25 @@ public class QueueController {
 
     /**
      * 发送mq延迟消息
+     *
      * @return
      */
-    @RequestMapping(value = prefix+"/basic/msg/delay/send",method = RequestMethod.GET)
-    public BaseResponse sendMqDelayMsg(){
-        BaseResponse response=new BaseResponse(StatusCode.Success);
+    @RequestMapping(value = prefix + "/basic/msg/delay/send", method = RequestMethod.GET)
+    public BaseResponse sendMqDelayMsg() {
+        BaseResponse response = new BaseResponse(StatusCode.Success);
         try {
-            DeadDto msgA=new DeadDto(1,"A");
-            final Long ttlA=10000L;
-            DeadDto msgB=new DeadDto(2,"B");
-            final Long ttlB=2000L;
-            DeadDto msgC=new DeadDto(3,"C");
-            final Long ttlC=4000L;
+            DeadDto msgA = new DeadDto(1, "A");
+            final Long ttlA = 10000L;
+            DeadDto msgB = new DeadDto(2, "B");
+            final Long ttlB = 2000L;
+            DeadDto msgC = new DeadDto(3, "C");
+            final Long ttlC = 4000L;
 
-            mqDelayQueuePublisher.sendDelayMsg(msgA,ttlA);
-            mqDelayQueuePublisher.sendDelayMsg(msgB,ttlB);
-            mqDelayQueuePublisher.sendDelayMsg(msgC,ttlC);
-        }catch (Exception e){
-            response=new BaseResponse(StatusCode.Fail.getCode(),e.getMessage());
+            mqDelayQueuePublisher.sendDelayMsg(msgA, ttlA);
+            mqDelayQueuePublisher.sendDelayMsg(msgB, ttlB);
+            mqDelayQueuePublisher.sendDelayMsg(msgC, ttlC);
+        } catch (Exception e) {
+            response = new BaseResponse(StatusCode.Fail.getCode(), e.getMessage());
         }
         return response;
     }
@@ -78,25 +81,26 @@ public class QueueController {
 
     /**
      * 发送redisson延迟消息
+     *
      * @return
      */
-    @RequestMapping(value = prefix+"/redisson/msg/delay/send",method = RequestMethod.GET)
-    public BaseResponse sendRedissonDelayMsg(){
-        BaseResponse response=new BaseResponse(StatusCode.Success);
+    @RequestMapping(value = prefix + "/redisson/msg/delay/send", method = RequestMethod.GET)
+    public BaseResponse sendRedissonDelayMsg() {
+        BaseResponse response = new BaseResponse(StatusCode.Success);
         try {
-            DeadDto msgA=new DeadDto(1,"A");
-            final Long ttlA=8000L;
-            DeadDto msgB=new DeadDto(2,"B");
-            final Long ttlB=2000L;
-            DeadDto msgC=new DeadDto(3,"C");
-            final Long ttlC=4000L;
+            DeadDto msgA = new DeadDto(1, "A");
+            final Long ttlA = 8000L;
+            DeadDto msgB = new DeadDto(2, "B");
+            final Long ttlB = 2000L;
+            DeadDto msgC = new DeadDto(3, "C");
+            final Long ttlC = 4000L;
 
-            redissonDelayQueuePublisher.sendDelayMsg(msgA,ttlA);
-            redissonDelayQueuePublisher.sendDelayMsg(msgB,ttlB);
-            redissonDelayQueuePublisher.sendDelayMsg(msgC,ttlC);
+            redissonDelayQueuePublisher.sendDelayMsg(msgA, ttlA);
+            redissonDelayQueuePublisher.sendDelayMsg(msgB, ttlB);
+            redissonDelayQueuePublisher.sendDelayMsg(msgC, ttlC);
 
-        }catch (Exception e){
-            response=new BaseResponse(StatusCode.Fail.getCode(),e.getMessage());
+        } catch (Exception e) {
+            response = new BaseResponse(StatusCode.Fail.getCode(), e.getMessage());
         }
         return response;
     }

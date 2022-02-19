@@ -9,12 +9,13 @@ import java.io.Serializable;
 
 /**
  * 用户个人信息实体
+ *
  * @Author:debug (SteadyJack)
  * @Date: 2019/3/16 9:21
  **/
 @Data
 @ToString
-public class Person implements Serializable{
+public class Person implements Serializable {
 
     private Integer id;
     private Integer age;

@@ -4,16 +4,19 @@ package com.debug.middleware.server.service.redisson.praise;
  */
 
 import com.debug.middleware.model.dto.PraiseRankDto;
+
 import java.util.Comparator;
 
 /**
  * 博客点赞总数比较器
+ *
  * @Author:debug (SteadyJack)
  * @Date: 2019/5/4 14:36
  **/
-public class PraiseTotalComparator implements Comparator<PraiseRankDto>{
+public class PraiseTotalComparator implements Comparator<PraiseRankDto> {
     /**
      * 按照点赞总数进行排行
+     *
      * @param o1 待比较的实体1
      * @param o2 待比较的实体2
      * @return

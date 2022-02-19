@@ -6,6 +6,7 @@ import java.util.Random;
 
 /**
  * 二倍均值法的代码实战
+ *
  * @author: zhonglinsen
  * @date: 2019/3/15
  */
@@ -13,6 +14,7 @@ public class RedPacketUtil {
 
     /**
      * 发红包算法，金额参数以分为单位
+     *
      * @param totalAmount
      * @param totalPeopleNum
      * @return
@@ -20,7 +22,7 @@ public class RedPacketUtil {
     public static List<Integer> divideRedPackage(Integer totalAmount, Integer totalPeopleNum) {
         List<Integer> amountList = new ArrayList<Integer>();
 
-        if (totalAmount>0 && totalPeopleNum>0){
+        if (totalAmount > 0 && totalPeopleNum > 0) {
             Integer restAmount = totalAmount;
             Integer restPeopleNum = totalPeopleNum;
 

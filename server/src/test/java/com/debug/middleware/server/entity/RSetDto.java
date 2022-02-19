@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 /**
  * Redisson的集合数据组件RSet实体信息
+ *
  * @author: zhonglinsen
  * @date: 2019/4/29
  */

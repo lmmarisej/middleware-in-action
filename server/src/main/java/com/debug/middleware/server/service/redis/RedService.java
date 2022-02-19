@@ -28,7 +28,7 @@ import java.util.List;
 @EnableAsync
 public class RedService implements IRedService {
 
-    private static final Logger log= LoggerFactory.getLogger(RedService.class);
+    private static final Logger log = LoggerFactory.getLogger(RedService.class);
 
     @Autowired
     private RedRecordMapper redRecordMapper;
@@ -42,6 +42,7 @@ public class RedService implements IRedService {
 
     /**
      * 发红包记录
+     *
      * @param dto
      * @param redId
      * @param list
@@ -51,7 +52,7 @@ public class RedService implements IRedService {
     @Async
     @Transactional(rollbackFor = Exception.class)
     public void recordRedPacket(RedPacketDto dto, String redId, List<Integer> list) throws Exception {
-        RedRecord redRecord=new RedRecord();
+        RedRecord redRecord = new RedRecord();
         redRecord.setUserId(dto.getUserId());
         redRecord.setRedPacket(redId);
         redRecord.setTotal(dto.getTotal());
@@ -59,8 +60,8 @@ public class RedService implements IRedService {
         redRecordMapper.insertSelective(redRecord);
 
         RedDetail detail;
-        for (Integer i:list){
-            detail=new RedDetail();
+        for (Integer i : list) {
+            detail = new RedDetail();
             detail.setRecordId(redRecord.getId());
             detail.setAmount(BigDecimal.valueOf(i));
             redDetailMapper.insertSelective(detail);
@@ -69,6 +70,7 @@ public class RedService implements IRedService {
 
     /**
      * 抢红包记录
+     *
      * @param userId
      * @param redId
      * @param amount
@@ -77,7 +79,7 @@ public class RedService implements IRedService {
     @Override
     @Async
     public void recordRobRedPacket(Integer userId, String redId, BigDecimal amount) throws Exception {
-        RedRobRecord redRobRecord=new RedRobRecord();
+        RedRobRecord redRobRecord = new RedRobRecord();
         redRobRecord.setUserId(userId);
         redRobRecord.setRedPacket(redId);
         redRobRecord.setAmount(amount);

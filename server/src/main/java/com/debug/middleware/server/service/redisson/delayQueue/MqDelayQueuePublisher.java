@@ -16,13 +16,14 @@ import org.springframework.stereotype.Component;
 
 /**
  * RabbitMQ死信队列消息模型-生产者
+ *
  * @Author:debug (SteadyJack)
  * @Date: 2019/5/2 17:10
  **/
 @Component
 public class MqDelayQueuePublisher {
     //定义日志
-    private static final Logger log= LoggerFactory.getLogger(MqDelayQueuePublisher.class);
+    private static final Logger log = LoggerFactory.getLogger(MqDelayQueuePublisher.class);
     //定义RabbitMQ发送消息的操作组件实例
     @Autowired
     private RabbitTemplate rabbitTemplate;
@@ -32,10 +33,11 @@ public class MqDelayQueuePublisher {
 
     /**
      * 发送消息入延迟队列
+     *
      * @param msg 消息
      * @param ttl 消息的存活时间
      */
-    public void sendDelayMsg(final DeadDto msg, final Long ttl){
+    public void sendDelayMsg(final DeadDto msg, final Long ttl) {
         try {
             //设置消息在RabbitMQ传输的格式
             rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
@@ -47,11 +49,11 @@ public class MqDelayQueuePublisher {
                 @Override
                 public Message postProcessMessage(Message message) throws AmqpException {
                     //获取消息属性实例
-                    MessageProperties messageProperties=message.getMessageProperties();
+                    MessageProperties messageProperties = message.getMessageProperties();
                     //设置消息的持久化
                     messageProperties.setDeliveryMode(MessageDeliveryMode.PERSISTENT);
                     //指定消息头中消息的具体类型
-                    messageProperties.setHeader(AbstractJavaTypeMapper.DEFAULT_CONTENT_CLASSID_FIELD_NAME,DeadDto.class);
+                    messageProperties.setHeader(AbstractJavaTypeMapper.DEFAULT_CONTENT_CLASSID_FIELD_NAME, DeadDto.class);
                     //设置消息的过期时间
                     messageProperties.setExpiration(ttl.toString());
                     //返回消息实例
@@ -59,9 +61,9 @@ public class MqDelayQueuePublisher {
                 }
             });
 
-            log.info("RabbitMQ死信队列消息模型-生产者-发送消息入延迟队列-消息：{}",msg);
-        }catch (Exception e){
-            log.error("RabbitMQ死信队列消息模型-生产者-发送消息入延迟队列-发生异常：{}",msg,e.fillInStackTrace());
+            log.info("RabbitMQ死信队列消息模型-生产者-发送消息入延迟队列-消息：{}", msg);
+        } catch (Exception e) {
+            log.error("RabbitMQ死信队列消息模型-生产者-发送消息入延迟队列-发生异常：{}", msg, e.fillInStackTrace());
         }
     }
 }

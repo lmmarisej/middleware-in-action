@@ -7,19 +7,21 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 锁机制
+ *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/14 17:16
  **/
-public class LockOne{
-    private static final Logger log= LoggerFactory.getLogger(LockOne.class);
+public class LockOne {
+    private static final Logger log = LoggerFactory.getLogger(LockOne.class);
 
-    public static void main(String args[]){
-        Thread tAdd=new Thread(new LockThread(100));
+    public static void main(String args[]) {
+        Thread tAdd = new Thread(new LockThread(100));
         Thread tSub = new Thread(new LockThread(-100));
         tAdd.start();
         tSub.start();
     }
 }
+
 //模拟锁机制的线程类
 class LockThread implements Runnable {
     private static final Logger log = LoggerFactory.getLogger(LockThread.class);

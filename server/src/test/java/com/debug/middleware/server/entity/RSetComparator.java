@@ -4,12 +4,14 @@ import java.util.Comparator;
 
 /**
  * 集合RSet数据组件的自定排序
+ *
  * @author: zhonglinsen
  * @date: 2019/4/29
  */
-public class RSetComparator implements Comparator<RSetDto>{
+public class RSetComparator implements Comparator<RSetDto> {
     /**
      * 自定义排序的逻辑
+     *
      * @param o1
      * @param o2
      * @return

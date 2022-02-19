@@ -27,19 +27,19 @@ import java.util.List;
 @SpringBootTest
 public class CommonTest {
 
-    private static final Logger log= LoggerFactory.getLogger(CommonTest.class);
+    private static final Logger log = LoggerFactory.getLogger(CommonTest.class);
 
     @Test
-    public void one(){
-        List<A> listOne=new ArrayList<>();
-        listOne.add(new A(1,"a",10));
-        listOne.add(new A(2,"b",20));
-        listOne.add(new A(3,"c",30));
-        listOne.add(new A(4,"d",40));
+    public void one() {
+        List<A> listOne = new ArrayList<>();
+        listOne.add(new A(1, "a", 10));
+        listOne.add(new A(2, "b", 20));
+        listOne.add(new A(3, "c", 30));
+        listOne.add(new A(4, "d", 40));
 
-        List<A> listTwo=new ArrayList<>();
-        listTwo.add(new A(2,"b",20));
-        listTwo.add(new A(4,"d",40));
+        List<A> listTwo = new ArrayList<>();
+        listTwo.add(new A(2, "b", 20));
+        listTwo.add(new A(4, "d", 40));
 
 
         //第一种方法：
@@ -48,27 +48,27 @@ public class CommonTest {
 
 
         //第二种方法：
-        List<A> result=new ArrayList<>();
-        for (A a:listOne){
-            Collection<A> filter=Collections2.filter(listTwo, new Predicate<A>() {
+        List<A> result = new ArrayList<>();
+        for (A a : listOne) {
+            Collection<A> filter = Collections2.filter(listTwo, new Predicate<A>() {
                 @Override
                 public boolean apply(A b) {
                     return a.getId().equals(b.getId());
                 }
             });
 
-            if (filter!=null && filter.size()>0){
+            if (filter != null && filter.size() > 0) {
                 result.add(a);
             }
         }
-        log.info("结果：{} ",result);
+        log.info("结果：{} ", result);
 
         Float.parseFloat(String.valueOf(Double.parseDouble("1.3")));
     }
 
     @Data
     @ToString
-    class A{
+    class A {
         private Integer id;
         private String name;
         private Integer total;

@@ -16,15 +16,16 @@ import java.util.Map;
 
 /**
  * 缓存穿透实战
+ *
  * @Author:debug (SteadyJack)
  * @Date: 2019/3/17 18:33
  **/
 @RestController
 public class CachePassController {
 
-    private static final Logger log= LoggerFactory.getLogger(CachePassController.class);
+    private static final Logger log = LoggerFactory.getLogger(CachePassController.class);
 
-    private static final String prefix="cache/pass";
+    private static final String prefix = "cache/pass";
 
     @Autowired
     private CachePassService cachePassService;
@@ -32,20 +33,21 @@ public class CachePassController {
 
     /**
      * 获取热销商品信息
+     *
      * @param itemCode
      * @return
      */
-    @RequestMapping(value = prefix+"/item/info",method = RequestMethod.GET)
-    public Map<String,Object> getItem(@RequestParam String itemCode){
-        Map<String,Object> resMap=new HashMap<>();
-        resMap.put("code",0);
-        resMap.put("msg","成功");
+    @RequestMapping(value = prefix + "/item/info", method = RequestMethod.GET)
+    public Map<String, Object> getItem(@RequestParam String itemCode) {
+        Map<String, Object> resMap = new HashMap<>();
+        resMap.put("code", 0);
+        resMap.put("msg", "成功");
 
         try {
-            resMap.put("data",cachePassService.getItemInfo(itemCode));
-        }catch (Exception e){
-            resMap.put("code",-1);
-            resMap.put("msg","失败"+e.getMessage());
+            resMap.put("data", cachePassService.getItemInfo(itemCode));
+        } catch (Exception e) {
+            resMap.put("code", -1);
+            resMap.put("msg", "失败" + e.getMessage());
         }
         return resMap;
     }

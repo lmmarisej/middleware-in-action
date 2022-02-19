@@ -13,7 +13,7 @@ import java.io.Serializable;
  **/
 @Data
 @ToString
-public class Student implements Serializable{
+public class Student implements Serializable {
 
     private String id;
     private String userName;

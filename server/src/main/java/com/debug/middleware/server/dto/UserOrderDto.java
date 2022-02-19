@@ -11,12 +11,13 @@ import java.io.Serializable;
 
 /**
  * 用户下单实体信息
+ *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/11 19:05
  **/
 @Data
 @ToString
-public class UserOrderDto implements Serializable{
+public class UserOrderDto implements Serializable {
     @NotBlank
     private String orderNo;//订单编号-必填
     @NotNull

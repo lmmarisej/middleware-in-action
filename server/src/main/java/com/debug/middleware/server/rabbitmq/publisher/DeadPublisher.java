@@ -20,13 +20,14 @@ import org.springframework.stereotype.Component;
 
 /**
  * 死信队列-生产者
+ *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/9 23:17
  **/
 @Component
 public class DeadPublisher {
     //定义日志
-    private static final Logger log= LoggerFactory.getLogger(DeadPublisher.class);
+    private static final Logger log = LoggerFactory.getLogger(DeadPublisher.class);
     //定义读取环境变量实例
     @Autowired
     private Environment env;
@@ -39,9 +40,10 @@ public class DeadPublisher {
 
     /**
      * 发送对象类型的消息入死信队列
+     *
      * @param info
      */
-    public void sendMsg(DeadInfo info){
+    public void sendMsg(DeadInfo info) {
         try {
             //设置消息的传输格式-Json格式
             rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
@@ -55,11 +57,11 @@ public class DeadPublisher {
                 @Override
                 public Message postProcessMessage(Message message) throws AmqpException {
                     //获取消息属性对象
-                    MessageProperties messageProperties=message.getMessageProperties();
+                    MessageProperties messageProperties = message.getMessageProperties();
                     //设置消息的持久化策略
                     messageProperties.setDeliveryMode(MessageDeliveryMode.PERSISTENT);
                     //设置消息头-即直接指定发送的消息所属的对象类型
-                    messageProperties.setHeader(AbstractJavaTypeMapper.DEFAULT_CONTENT_CLASSID_FIELD_NAME,DeadInfo.class);
+                    messageProperties.setHeader(AbstractJavaTypeMapper.DEFAULT_CONTENT_CLASSID_FIELD_NAME, DeadInfo.class);
 
                     //设置消息的TTL - 当消息和队列同时都设置了TTL时，则取较短时间的值
                     //messageProperties.setExpiration(String.valueOf(10000));
@@ -68,10 +70,10 @@ public class DeadPublisher {
                 }
             });
             //打印日志
-            log.info("死信队列实战-发送对象类型的消息入死信队列-内容为：{} ",info);
+            log.info("死信队列实战-发送对象类型的消息入死信队列-内容为：{} ", info);
 
-        }catch (Exception e){
-            log.error("死信队列实战-发送对象类型的消息入死信队列-发生异常：{} ",info,e.fillInStackTrace());
+        } catch (Exception e) {
+            log.error("死信队列实战-发送对象类型的消息入死信队列-发生异常：{} ", info, e.fillInStackTrace());
         }
     }
 }

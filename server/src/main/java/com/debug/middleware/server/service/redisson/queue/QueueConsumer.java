@@ -13,34 +13,37 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 
-/**队列的消费者
+/**
+ * 队列的消费者
+ *
  * @Author:debug (SteadyJack)
  * @Date: 2019/5/2 10:10
  **/
 @Component
-public class QueueConsumer implements ApplicationRunner,Ordered{
+public class QueueConsumer implements ApplicationRunner, Ordered {
     //定义日志
-    private static final Logger log= LoggerFactory.getLogger(QueueConsumer.class);
+    private static final Logger log = LoggerFactory.getLogger(QueueConsumer.class);
     //定义Redisson的操作客户端实例
     @Autowired
     private RedissonClient redissonClient;
 
     /**
      * 在项目运行启动成功之后执行该run方法
+     *
      * @param args
      * @throws Exception
      */
     @Override
     public void run(ApplicationArguments args) throws Exception {
         //定义基本队列的名称
-        final String queueName="redissonBasicQueue";
+        final String queueName = "redissonBasicQueue";
         //获取队列的实例
-        RQueue<String> rQueue=redissonClient.getQueue(queueName);
-        while (true){
+        RQueue<String> rQueue = redissonClient.getQueue(queueName);
+        while (true) {
             //从队列中弹出消息
-            String msg=rQueue.poll();
-            if (!Strings.isNullOrEmpty(msg)){
-                log.info("队列的消费者-监听消费消息：{} ",msg);
+            String msg = rQueue.poll();
+            if (!Strings.isNullOrEmpty(msg)) {
+                log.info("队列的消费者-监听消费消息：{} ", msg);
 
                 //TODO:在这里执行相应的业务逻辑
             }

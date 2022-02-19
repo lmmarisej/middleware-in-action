@@ -17,13 +17,14 @@ import org.springframework.stereotype.Component;
 
 /**
  * 确认消费模式-生产者
+ *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/7 8:29
  **/
 @Component
 public class KnowledgePublisher {
 
-    private static final Logger log= LoggerFactory.getLogger(KnowledgePublisher.class);
+    private static final Logger log = LoggerFactory.getLogger(KnowledgePublisher.class);
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -37,23 +38,24 @@ public class KnowledgePublisher {
 
     /**
      * 基于AUTO机制-生产者发送消息
+     *
      * @param info
      */
-    public void sendAutoMsg(KnowledgeInfo info){
+    public void sendAutoMsg(KnowledgeInfo info) {
         try {
-            if (info!=null){
+            if (info != null) {
                 rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
                 rabbitTemplate.setExchange(env.getProperty("mq.auto.knowledge.exchange.name"));
                 rabbitTemplate.setRoutingKey(env.getProperty("mq.auto.knowledge.routing.key.name"));
 
-                Message message= MessageBuilder.withBody(objectMapper.writeValueAsBytes(info))
+                Message message = MessageBuilder.withBody(objectMapper.writeValueAsBytes(info))
                         .setDeliveryMode(MessageDeliveryMode.PERSISTENT)
                         .build();
                 rabbitTemplate.convertAndSend(message);
-                log.info("基于AUTO机制-生产者发送消息-内容为：{} ",info);
+                log.info("基于AUTO机制-生产者发送消息-内容为：{} ", info);
             }
-        }catch (Exception e){
-            log.error("基于AUTO机制-生产者发送消息-发生异常：{} ",info,e.fillInStackTrace());
+        } catch (Exception e) {
+            log.error("基于AUTO机制-生产者发送消息-发生异常：{} ", info, e.fillInStackTrace());
         }
     }
 

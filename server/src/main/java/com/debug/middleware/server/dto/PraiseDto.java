@@ -2,11 +2,13 @@ package com.debug.middleware.server.dto;
 
 import lombok.Data;
 import lombok.ToString;
+
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
  * 接受前端用户点赞博客的信息的实体对象
+ *
  * @author: zhonglinsen
  */
 @Data

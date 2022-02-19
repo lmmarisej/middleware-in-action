@@ -2,6 +2,7 @@ package com.debug.middleware.server.utils;
 
 /**
  * 雪花算法
+ *
  * @author: zhonglinsen
  * @date: 2019/2/27
  */

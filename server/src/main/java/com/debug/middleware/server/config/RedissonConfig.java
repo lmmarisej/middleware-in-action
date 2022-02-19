@@ -12,6 +12,7 @@ import org.springframework.core.env.Environment;
 
 /**
  * Redisson相关开源组件自定义注入
+ *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/27 13:34
  **/
@@ -23,12 +24,13 @@ public class RedissonConfig {
 
     /**
      * 自定义注入配置操作Redisson的客户端实例
+     *
      * @return
      */
     @Bean
-    public RedissonClient config(){
+    public RedissonClient config() {
         //创建配置实例
-        Config config=new Config();
+        Config config = new Config();
         //可以设置传输模式为EPOLL，也可以设置为NIO等等
         //config.setTransportMode(TransportMode.NIO);
         //设置服务节点部署模式：集群模式；单一节点模式；主从模式；哨兵模式等等

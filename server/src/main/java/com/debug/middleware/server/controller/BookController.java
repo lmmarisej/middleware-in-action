@@ -18,14 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/book")
 public class BookController {
 
-    private static final Logger log= LoggerFactory.getLogger(BookController.class);
+    private static final Logger log = LoggerFactory.getLogger(BookController.class);
 
     /**
      * 获取书籍对象信息
      */
-    @RequestMapping(value = "info",method = RequestMethod.GET)
-    public Book info(Integer bookNo,String bookName){
-        Book book=new Book();
+    @RequestMapping(value = "info", method = RequestMethod.GET)
+    public Book info(Integer bookNo, String bookName) {
+        Book book = new Book();
         book.setBookNo(bookNo);
         book.setName(bookName);
         return book;

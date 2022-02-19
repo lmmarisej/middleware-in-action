@@ -9,12 +9,13 @@ import java.io.Serializable;
 
 /**
  * 用户充值记录
+ *
  * @Author:debug (SteadyJack)
  * @Date: 2019/3/16 21:40
  **/
 @Data
 @ToString
-public class PhoneUser implements Serializable{
+public class PhoneUser implements Serializable {
 
     private String phone;
     private Double fare;

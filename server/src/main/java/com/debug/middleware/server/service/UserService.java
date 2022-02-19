@@ -13,13 +13,14 @@ import org.springframework.stereotype.Service;
 
 /**
  * 用户服务
+ *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/7 19:12
  **/
 @Service
 public class UserService {
 
-    private static final Logger log= LoggerFactory.getLogger(UserService.class);
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     private UserMapper userMapper;
@@ -30,17 +31,18 @@ public class UserService {
 
     /**
      * 用户登录服务
+     *
      * @param dto
      * @return
      * @throws Exception
      */
-    public Boolean login(UserLoginDto dto) throws Exception{
-        User user=userMapper.selectByUserNamePassword(dto.getUserName(),dto.getPassword());
-        if (user!=null){
+    public Boolean login(UserLoginDto dto) throws Exception {
+        User user = userMapper.selectByUserNamePassword(dto.getUserName(), dto.getPassword());
+        if (user != null) {
             dto.setUserId(user.getId());
             logPublisher.sendLogMsg(dto);
             return true;
-        }else{
+        } else {
             return false;
         }
     }

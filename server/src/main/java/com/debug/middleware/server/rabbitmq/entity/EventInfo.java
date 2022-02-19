@@ -9,12 +9,13 @@ import java.io.Serializable;
 
 /**
  * 对象实体信息
+ *
  * @Author:debug (SteadyJack)
  * @Date: 2019/3/31 21:50
  **/
 @Data
 @ToString
-public class EventInfo implements Serializable{
+public class EventInfo implements Serializable {
 
     private Integer id;
     private String module;

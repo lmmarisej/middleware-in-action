@@ -20,13 +20,14 @@ import org.springframework.stereotype.Component;
 
 /**
  * 系统日志记录-生产者
+ *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/7 19:18
  **/
 @Component
 public class LogPublisher {
     //定义日志
-    private static final Logger log= LoggerFactory.getLogger(LogPublisher.class);
+    private static final Logger log = LoggerFactory.getLogger(LogPublisher.class);
     //定义RabbitMQ操作组件
     @Autowired
     private RabbitTemplate rabbitTemplate;
@@ -39,9 +40,10 @@ public class LogPublisher {
 
     /**
      * 发送登录成功后的用户相关信息入队列
+     *
      * @param loginDto
      */
-    public void sendLogMsg(UserLoginDto loginDto){
+    public void sendLogMsg(UserLoginDto loginDto) {
         try {
             rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
             rabbitTemplate.setExchange(env.getProperty("mq.login.exchange.name"));
@@ -50,15 +52,15 @@ public class LogPublisher {
             rabbitTemplate.convertAndSend(loginDto, new MessagePostProcessor() {
                 @Override
                 public Message postProcessMessage(Message message) throws AmqpException {
-                    MessageProperties messageProperties=message.getMessageProperties();
+                    MessageProperties messageProperties = message.getMessageProperties();
                     messageProperties.setDeliveryMode(MessageDeliveryMode.PERSISTENT);
-                    messageProperties.setHeader(AbstractJavaTypeMapper.DEFAULT_CONTENT_CLASSID_FIELD_NAME,UserLoginDto.class);
+                    messageProperties.setHeader(AbstractJavaTypeMapper.DEFAULT_CONTENT_CLASSID_FIELD_NAME, UserLoginDto.class);
                     return message;
                 }
             });
-            log.info("系统日志记录-生产者-发送登录成功后的用户相关信息入队列-内容：{} ",loginDto);
-        }catch (Exception e){
-            log.error("系统日志记录-生产者-发送登录成功后的用户相关信息入队列-发生异常：{} ",loginDto,e.fillInStackTrace());
+            log.info("系统日志记录-生产者-发送登录成功后的用户相关信息入队列-内容：{} ", loginDto);
+        } catch (Exception e) {
+            log.error("系统日志记录-生产者-发送登录成功后的用户相关信息入队列-发生异常：{} ", loginDto, e.fillInStackTrace());
         }
     }
 }

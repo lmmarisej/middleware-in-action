@@ -2,6 +2,7 @@ package com.debug.middleware.model.entity;
 
 import lombok.Data;
 import lombok.ToString;
+
 import java.util.Date;
 
 /**

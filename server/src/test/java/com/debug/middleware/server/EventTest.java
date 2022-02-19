@@ -22,7 +22,7 @@ public class EventTest {
     private Publisher publisher;
 
     @Test
-    public void test1() throws Exception{
+    public void test1() throws Exception {
         publisher.sendMsg();
     }
 

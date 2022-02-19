@@ -16,15 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 用户注册请求Controller
+ *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/20 20:23
  **/
 @RestController
 public class UserRegController {
     //定义日志实例
-    private static final Logger log= LoggerFactory.getLogger(UserRegController.class);
+    private static final Logger log = LoggerFactory.getLogger(UserRegController.class);
     //定义请求的前缀
-    private static final String prefix="user/reg";
+    private static final String prefix = "user/reg";
     //定义处理用户注册请求的服务实例
     @Autowired
     private UserRegService userRegService;
@@ -32,17 +33,18 @@ public class UserRegController {
 
     /**
      * 提交用户注册信息
+     *
      * @param dto
      * @return
      */
-    @RequestMapping(value = prefix+"/submit",method = RequestMethod.GET)
-    public BaseResponse reg(UserRegDto dto){
+    @RequestMapping(value = prefix + "/submit", method = RequestMethod.GET)
+    public BaseResponse reg(UserRegDto dto) {
         //校验提交的用户名、密码等信息
-        if (Strings.isNullOrEmpty(dto.getUserName()) || Strings.isNullOrEmpty(dto.getPassword())){
+        if (Strings.isNullOrEmpty(dto.getUserName()) || Strings.isNullOrEmpty(dto.getPassword())) {
             return new BaseResponse(StatusCode.InvalidParams);
         }
         //定义返回信息实例
-        BaseResponse response=new BaseResponse(StatusCode.Success);
+        BaseResponse response = new BaseResponse(StatusCode.Success);
         try {
             //处理用户提交请求-不加分布式锁
             //userRegService.userRegNoLock(dto);
@@ -55,9 +57,9 @@ public class UserRegController {
 
             //处理用户提交请求-加Redisson分布式锁
             userRegService.userRegRedisson(dto);
-        }catch (Exception e){
+        } catch (Exception e) {
             //发生异常情况的处理
-            response=new BaseResponse(StatusCode.Fail.getCode(),e.getMessage());
+            response = new BaseResponse(StatusCode.Fail.getCode(), e.getMessage());
         }
         //返回响应信息
         return response;

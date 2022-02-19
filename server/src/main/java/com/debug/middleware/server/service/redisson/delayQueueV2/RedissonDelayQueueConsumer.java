@@ -14,14 +14,15 @@ import org.springframework.stereotype.Component;
 
 /**
  * Redisson延迟队列消息模型-消费者
+ *
  * @Author:debug (SteadyJack)
  * @Date: 2019/5/2 17:11
  **/
 @Component
 @EnableScheduling
-public class RedissonDelayQueueConsumer{
+public class RedissonDelayQueueConsumer {
     //定义日志
-    private static final Logger log= LoggerFactory.getLogger(RedissonDelayQueueConsumer.class);
+    private static final Logger log = LoggerFactory.getLogger(RedissonDelayQueueConsumer.class);
     //定义Redisson的客户端操作实例
     @Autowired
     private RedissonClient redissonClient;
@@ -29,18 +30,19 @@ public class RedissonDelayQueueConsumer{
     /**
      * 监听消费真正队列中的消息
      * 每时每刻都在不断的监听执行
+     *
      * @throws Exception
      */
     @Scheduled(cron = "*/1 * * * * ?")
     public void consumeMsg() throws Exception {
         //定义延迟队列的名称
-        final String delayQueueName="redissonDelayQueueV3";
-        RBlockingQueue<DeadDto> rBlockingQueue=redissonClient.getBlockingQueue(delayQueueName);
+        final String delayQueueName = "redissonDelayQueueV3";
+        RBlockingQueue<DeadDto> rBlockingQueue = redissonClient.getBlockingQueue(delayQueueName);
 
         //从队列中弹出消息
-        DeadDto msg=rBlockingQueue.take();
-        if (msg!=null){
-            log.info("Redisson延迟队列消息模型-消费者-监听消费真正队列中的消息：{} ",msg);
+        DeadDto msg = rBlockingQueue.take();
+        if (msg != null) {
+            log.info("Redisson延迟队列消息模型-消费者-监听消费真正队列中的消息：{} ", msg);
 
             //TODO:在这里执行相应的业务逻辑
         }
