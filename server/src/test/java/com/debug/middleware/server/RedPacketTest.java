@@ -25,7 +25,7 @@ public class RedPacketTest {
 
     //二倍均值法自测
     @Test
-    public void one() throws Exception {
+    public void one() {
         //总金额单位为分
         Integer amout = 1000;
         //总人数-红包个数

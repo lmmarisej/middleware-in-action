@@ -14,10 +14,6 @@ public class RedPacketUtil {
 
     /**
      * 发红包算法，金额参数以分为单位
-     *
-     * @param totalAmount
-     * @param totalPeopleNum
-     * @return
      */
     public static List<Integer> divideRedPackage(Integer totalAmount, Integer totalPeopleNum) {
         List<Integer> amountList = new ArrayList<Integer>();

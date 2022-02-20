@@ -6,14 +6,18 @@
 
     <settings>
         <!-- Globally enables or disables any caches configured in any mapper under this configuration -->
+        <!--使用缓存-->
         <setting name="cacheEnabled" value="true"/>
         <!-- Sets the number of seconds the driver will wait for a response from the database -->
+        <!--SQL执行超时配置-->
         <setting name="defaultStatementTimeout" value="3000"/>
         <!-- Enables automatic mapping from classic database column names A_COLUMN to camel case classic Java property names aColumn -->
+        <!--允许驼峰命名配置-->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
         <!-- Allows JDBC support for generated keys. A compatible driver is required.
         This setting forces generated keys to be used if set to true,
          as some drivers deny compatibility but still work -->
+        <!--执行完SQL后返回主键配置-->
         <setting name="useGeneratedKeys" value="true"/>
         <!-- 设置控制台打印sql -->
         <!--<setting name="logImpl" value="stdout_logging" />-->

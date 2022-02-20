@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
+
 /**
  * 基本消息模型-消费者
  *
@@ -31,7 +33,7 @@ public class BasicConsumer {
     @RabbitListener(queues = "${mq.basic.info.queue.name}", containerFactory = "singleListenerContainer")
     public void consumeMsg(@Payload byte[] msg) {
         try {
-            String message = new String(msg, "utf-8");
+            String message = new String(msg, StandardCharsets.UTF_8);
             log.info("基本消息模型-消费者-监听消费到消息：{} ", message);
 
 

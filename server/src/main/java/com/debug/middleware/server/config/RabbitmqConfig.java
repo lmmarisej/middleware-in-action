@@ -8,7 +8,6 @@ import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFacto
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
-import org.springframework.amqp.rabbit.support.CorrelationData;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -37,8 +36,6 @@ public class RabbitmqConfig {
 
     /**
      * 单一消费者
-     *
-     * @return
      */
     @Bean(name = "singleListenerContainer")
     public SimpleRabbitListenerContainerFactory listenerContainer() {
@@ -53,8 +50,6 @@ public class RabbitmqConfig {
 
     /**
      * 多个消费者
-     *
-     * @return
      */
     @Bean(name = "multiListenerContainer")
     public SimpleRabbitListenerContainerFactory multiListenerContainer() {
@@ -70,8 +65,6 @@ public class RabbitmqConfig {
 
     /**
      * RabbitMQ发送消息的操作组件实例
-     *
-     * @return
      */
     @Bean
     public RabbitTemplate rabbitTemplate() {
@@ -79,16 +72,12 @@ public class RabbitmqConfig {
         connectionFactory.setPublisherReturns(true);
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMandatory(true);
-        rabbitTemplate.setConfirmCallback(new RabbitTemplate.ConfirmCallback() {
-            public void confirm(CorrelationData correlationData, boolean ack, String cause) {
-                log.info("消息发送成功:correlationData({}),ack({}),cause({})", correlationData, ack, cause);
-            }
-        });
-        rabbitTemplate.setReturnCallback(new RabbitTemplate.ReturnCallback() {
-            public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routingKey) {
-                log.info("消息丢失:exchange({}),route({}),replyCode({}),replyText({}),message:{}", exchange, routingKey, replyCode, replyText, message);
-            }
-        });
+        rabbitTemplate.setConfirmCallback((correlationData, ack, cause) ->
+                log.info("消息发送成功:correlationData({}),ack({}),cause({})",
+                        correlationData, ack, cause));
+        rabbitTemplate.setReturnCallback((message, replyCode, replyText, exchange, routingKey) ->
+                log.info("消息丢失:exchange({}),route({}),replyCode({}),replyText({}),message:{}",
+                        exchange, routingKey, replyCode, replyText, message));
         return rabbitTemplate;
     }
 
@@ -326,12 +315,12 @@ public class RabbitmqConfig {
         container.setConnectionFactory(connectionFactory);
         container.setMessageConverter(new Jackson2JsonMessageConverter());
 
-        //TODO：并发配置
+        // 并发配置
         container.setConcurrentConsumers(1);
         container.setMaxConcurrentConsumers(1);
         container.setPrefetchCount(1);
 
-        //TODO：消息确认模式-采用人为手动确认消费机制
+        // 消息确认模式-采用人为手动确认消费机制
         container.setAcknowledgeMode(AcknowledgeMode.MANUAL);
         container.setQueues(manualQueue);
         container.setMessageListener(knowledgeManualConsumer);

@@ -82,12 +82,11 @@ public class RedisTest2 {
 
         //获取Redis中List的数据-从队头中获取
         log.info("--获取Redis中List的数据-从队头中获取--");
-        Object res = listOperations.rightPop(key);
+        Object res;
         Person resP;
-        while (res != null) {
+        while ((res = listOperations.rightPop(key)) != null) {
             resP = (Person) res;
             log.info("当前数据：{} ", resP);
-            res = listOperations.rightPop(key);
         }
     }
 
@@ -116,10 +115,9 @@ public class RedisTest2 {
         }
 
         //从缓存中获取已剔除的用户集合
-        Object res = setOperations.pop(key);
-        while (res != null) {
+        Object res;
+        while ((res = setOperations.pop(key)) != null) {
             log.info("从缓存中获取的用户集合-当前用户：{} ", res);
-            res = setOperations.pop(key);
         }
     }
 

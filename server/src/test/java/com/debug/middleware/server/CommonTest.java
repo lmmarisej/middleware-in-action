@@ -50,12 +50,7 @@ public class CommonTest {
         //第二种方法：
         List<A> result = new ArrayList<>();
         for (A a : listOne) {
-            Collection<A> filter = Collections2.filter(listTwo, new Predicate<A>() {
-                @Override
-                public boolean apply(A b) {
-                    return a.getId().equals(b.getId());
-                }
-            });
+            Collection<A> filter = Collections2.filter(listTwo, b -> a.getId().equals(b.getId()));
 
             if (filter != null && filter.size() > 0) {
                 result.add(a);

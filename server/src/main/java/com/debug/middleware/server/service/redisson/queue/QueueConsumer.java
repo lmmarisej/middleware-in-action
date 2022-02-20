@@ -29,25 +29,25 @@ public class QueueConsumer implements ApplicationRunner, Ordered {
 
     /**
      * 在项目运行启动成功之后执行该run方法
-     *
-     * @param args
-     * @throws Exception
      */
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
         //定义基本队列的名称
         final String queueName = "redissonBasicQueue";
         //获取队列的实例
         RQueue<String> rQueue = redissonClient.getQueue(queueName);
-        while (true) {
-            //从队列中弹出消息
-            String msg = rQueue.poll();
-            if (!Strings.isNullOrEmpty(msg)) {
-                log.info("队列的消费者-监听消费消息：{} ", msg);
-
-                //TODO:在这里执行相应的业务逻辑
+        Thread consumerThread = new Thread(() -> {
+            while (true) {
+                //从队列中弹出消息
+                String msg = rQueue.poll();
+                if (!Strings.isNullOrEmpty(msg)) {
+                    log.info("队列的消费者-监听消费消息：{} ", msg);
+                    //TODO:在这里执行相应的业务逻辑
+                }
             }
-        }
+        });
+        consumerThread.setDaemon(true);
+        consumerThread.start();
     }
 
     /*
