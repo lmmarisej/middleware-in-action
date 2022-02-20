@@ -16,9 +16,6 @@ import java.util.Map;
 
 /**
  * 缓存穿透实战
- *
- * @Author:debug (SteadyJack)
- * @Date: 2019/3/17 18:33
  **/
 @RestController
 public class CachePassController {
@@ -33,9 +30,6 @@ public class CachePassController {
 
     /**
      * 获取热销商品信息
-     *
-     * @param itemCode
-     * @return
      */
     @RequestMapping(value = prefix + "/item/info", method = RequestMethod.GET)
     public Map<String, Object> getItem(@RequestParam String itemCode) {

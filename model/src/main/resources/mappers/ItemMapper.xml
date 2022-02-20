@@ -1,29 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.debug.middleware.model.mapper.ItemMapper">
+
     <resultMap id="BaseResultMap" type="com.debug.middleware.model.entity.Item">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="code" property="code" jdbcType="VARCHAR"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
     </resultMap>
+
+    <!--基本的字段SQL片段-->
     <sql id="Base_Column_List">
         id, code, name, create_time
     </sql>
+
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
         from item
         where id = #{id,jdbcType=INTEGER}
     </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from item
         where id = #{id,jdbcType=INTEGER}
     </delete>
+
+    <delete id="deleteByCode" parameterType="java.lang.String">
+        delete
+        from item
+        where code = #{code,jdbcType=VARCHAR}
+    </delete>
+
     <insert id="insert" parameterType="com.debug.middleware.model.entity.Item">
-        insert into item (id, code, name,
-                          create_time)
+        insert into item (id, code, name, create_time)
         values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
                 #{createTime,jdbcType=TIMESTAMP})
     </insert>
@@ -58,6 +69,7 @@
             </if>
         </trim>
     </insert>
+
     <update id="updateByPrimaryKeySelective" parameterType="com.debug.middleware.model.entity.Item">
         update item
         <set>

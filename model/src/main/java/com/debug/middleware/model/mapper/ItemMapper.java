@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Param;
 public interface ItemMapper {
     int deleteByPrimaryKey(Integer id);
 
+    int deleteByCode(String code);
+
     int insert(Item record);
 
     int insertSelective(Item record);

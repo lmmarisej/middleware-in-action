@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/book")
 public class BookController {
 
-    private static final Logger log = LoggerFactory.getLogger(BookController.class);
-
     /**
      * 获取书籍对象信息
      */
