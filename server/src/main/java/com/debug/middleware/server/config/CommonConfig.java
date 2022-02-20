@@ -30,21 +30,18 @@ public class CommonConfig {
      */
     @Bean
     public RedisTemplate<String, Object> redisTemplate() {
-        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<String, Object>();
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
-        //TODO:指定大key序列化策略为为String序列化
+        // 主要配置缓存中key和value的序列化策略
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
-        //TODO:指定hashKey序列化策略为String序列化
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
         //redisTemplate.setHashValueSerializer(new StringRedisSerializer());
         return redisTemplate;
     }
 
     /**
-     * 缓存redis-stringRedisTemplate
-     *
-     * @return
+     * 用于处理缓存中value的数据类型为字符串String的数据，包括String类型的数据，和序列化后为String类型的字符串数据。
      */
     @Bean
     public StringRedisTemplate stringRedisTemplate() {
