@@ -3,15 +3,18 @@ package com.debug.middleware.server;/**
  */
 
 import com.debug.middleware.server.utils.RedPacketUtil;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Repeat;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @Author:debug (SteadyJack)
@@ -25,25 +28,40 @@ public class RedPacketTest {
 
     //二倍均值法自测
     @Test
+    @Repeat(10)
     public void one() {
         //总金额单位为分
-        Integer amout = 1000;
+        int amout = new Random().nextInt(1000) + 1000;
         //总人数-红包个数
-        Integer total = 10;
+        int total = new Random().nextInt(10) + 10;
         //得到随机金额列表
         List<Integer> list = RedPacketUtil.divideRedPackage(amout, total);
-        log.info("总金额={}分，总个数={}个", amout, total);
 
         //用于统计生成的随机金额之和是否等于总金额
-        Integer sum = 0;
+        int sum = 0;
         //遍历输出每个随机金额
-        for (Integer i : list) {
-            log.info("随机金额为：{}分，即 {}元", i, new BigDecimal(i.toString()).divide(new BigDecimal(100)));
+        for (int i : list) {
+            log.info("随机金额为：{}分，即 {}元", i, new BigDecimal(i).divide(new BigDecimal(100)));
             sum += i;
         }
-        log.info("所有随机金额叠加之和={}分", sum);
+        log.info("红包生成总额：{}分，红包分配总额：{}分", amout, sum);
+        Assert.assertEquals("红包未被完全分配", sum, amout);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void two() {
+        RedPacketUtil.divideRedPackage(90, 100);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void three() {
+        RedPacketUtil.divideRedPackage(0, 1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void four() {
+        RedPacketUtil.divideRedPackage(90, 0);
+    }
 }
 
 

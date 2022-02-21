@@ -30,8 +30,6 @@ public class RedissonDelayQueueConsumer {
     /**
      * 监听消费真正队列中的消息
      * 每时每刻都在不断的监听执行
-     *
-     * @throws Exception
      */
     @Scheduled(cron = "*/1 * * * * ?")
     public void consumeMsg() throws Exception {
@@ -40,12 +38,11 @@ public class RedissonDelayQueueConsumer {
         RBlockingQueue<DeadDto> rBlockingQueue = redissonClient.getBlockingQueue(delayQueueName);
 
         //从队列中弹出消息
-        DeadDto msg = rBlockingQueue.take();
-        if (msg != null) {
-            log.info("Redisson延迟队列消息模型-消费者-监听消费真正队列中的消息：{} ", msg);
-
-            //TODO:在这里执行相应的业务逻辑
-        }
+//        DeadDto msg = rBlockingQueue.take();
+//        if (msg != null) {
+//            log.info("Redisson延迟队列消息模型-消费者-监听消费真正队列中的消息：{} ", msg);
+//            // 在这里执行相应的业务逻辑
+//        }
     }
 }
 

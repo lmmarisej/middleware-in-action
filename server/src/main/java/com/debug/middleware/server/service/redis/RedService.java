@@ -42,16 +42,11 @@ public class RedService implements IRedService {
 
     /**
      * 发红包记录
-     *
-     * @param dto
-     * @param redId
-     * @param list
-     * @throws Exception
      */
     @Override
     @Async
     @Transactional(rollbackFor = Exception.class)
-    public void recordRedPacket(RedPacketDto dto, String redId, List<Integer> list) throws Exception {
+    public void recordRedPacket(RedPacketDto dto, String redId, List<Integer> list) {
         RedRecord redRecord = new RedRecord();
         redRecord.setUserId(dto.getUserId());
         redRecord.setRedPacket(redId);
@@ -70,11 +65,6 @@ public class RedService implements IRedService {
 
     /**
      * 抢红包记录
-     *
-     * @param userId
-     * @param redId
-     * @param amount
-     * @throws Exception
      */
     @Override
     @Async
