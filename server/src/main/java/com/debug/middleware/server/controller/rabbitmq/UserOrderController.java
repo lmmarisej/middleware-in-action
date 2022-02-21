@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/11 19:05
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @RestController
 public class UserOrderController {
     //定义日志
@@ -36,7 +38,9 @@ public class UserOrderController {
     /**
      * 用户下单
      *
-     * @return
+     * @param dto a {@link com.debug.middleware.server.dto.UserOrderDto} object.
+     * @param result a {@link org.springframework.validation.BindingResult} object.
+     * @return a {@link com.debug.middleware.api.response.BaseResponse} object.
      */
     @RequestMapping(value = prefix + "/push", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public BaseResponse login(@RequestBody @Validated UserOrderDto dto, BindingResult result) {

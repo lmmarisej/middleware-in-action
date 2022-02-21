@@ -1,6 +1,4 @@
-package com.debug.middleware.server;/**
- * Created by Administrator on 2019/3/29.
- */
+package com.debug.middleware.server;
 
 import com.debug.middleware.model.dto.PraiseRankDto;
 import com.debug.middleware.server.dto.DeadDto;

@@ -8,6 +8,9 @@ import java.util.Date;
 
 /**
  * 用户每次提现时金额记录实体
+ *
+ * @author lmmarise.j
+ * @version $Id: $Id
  */
 @Data
 @ToString

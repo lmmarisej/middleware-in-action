@@ -16,7 +16,10 @@ import java.util.Map;
 
 /**
  * 缓存穿透实战
- **/
+ *
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @RestController
 public class CachePassController {
 
@@ -30,6 +33,9 @@ public class CachePassController {
 
     /**
      * 获取热销商品信息
+     *
+     * @param itemCode a {@link java.lang.String} object.
+     * @return a {@link java.util.Map} object.
      */
     @RequestMapping(value = prefix + "/item/info", method = RequestMethod.GET)
     public Map<String, Object> getItem(@RequestParam String itemCode) {

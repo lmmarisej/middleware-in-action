@@ -1,6 +1,4 @@
-package com.debug.middleware.server.rabbitmq.consumer;/**
- * Created by Administrator on 2019/4/7.
- */
+package com.debug.middleware.server.rabbitmq.consumer;
 
 import com.debug.middleware.server.rabbitmq.entity.KnowledgeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,9 +14,9 @@ import org.springframework.stereotype.Component;
 /**
  * 确认消费模式-人为手动确认消费-监听器
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/4/7 11:15
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Component("knowledgeManualConsumer")
 public class KnowledgeManualConsumer implements ChannelAwareMessageListener {
 
@@ -29,11 +27,9 @@ public class KnowledgeManualConsumer implements ChannelAwareMessageListener {
 
 
     /**
-     * 监听消费消息
+     * {@inheritDoc}
      *
-     * @param message 消息实体
-     * @param channel 通道
-     * @throws Exception
+     * 监听消费消息
      */
     @Override
     public void onMessage(Message message, Channel channel) throws Exception {

@@ -17,7 +17,9 @@ import org.springframework.stereotype.Component;
  *
  * @Author:debug (SteadyJack)
  * @Date: 2019/5/2 17:11
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Component
 @EnableScheduling
 public class RedissonDelayQueueConsumer {
@@ -30,6 +32,8 @@ public class RedissonDelayQueueConsumer {
     /**
      * 监听消费真正队列中的消息
      * 每时每刻都在不断的监听执行
+     *
+     * @throws java.lang.Exception if any.
      */
     @Scheduled(cron = "*/1 * * * * ?")
     public void consumeMsg() throws Exception {

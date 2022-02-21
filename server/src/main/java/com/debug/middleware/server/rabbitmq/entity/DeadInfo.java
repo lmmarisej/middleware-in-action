@@ -8,9 +8,13 @@ import lombok.ToString;
 import java.io.Serializable;
 
 /**
+ * <p>DeadInfo class.</p>
+ *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/9 23:18
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Data
 @ToString
 public class DeadInfo implements Serializable {
@@ -18,9 +22,18 @@ public class DeadInfo implements Serializable {
     private Integer id;
     private String msg;
 
+    /**
+     * <p>Constructor for DeadInfo.</p>
+     */
     public DeadInfo() {
     }
 
+    /**
+     * <p>Constructor for DeadInfo.</p>
+     *
+     * @param id a {@link java.lang.Integer} object.
+     * @param msg a {@link java.lang.String} object.
+     */
     public DeadInfo(Integer id, String msg) {
         this.id = id;
         this.msg = msg;

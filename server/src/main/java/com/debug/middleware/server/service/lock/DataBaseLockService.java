@@ -20,7 +20,9 @@ import java.util.Date;
  *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/17 20:36
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Service
 public class DataBaseLockService {
     //定义日志
@@ -35,8 +37,8 @@ public class DataBaseLockService {
     /**
      * 用户账户提取金额处理
      *
-     * @param dto
-     * @throws Exception
+     * @param dto a {@link com.debug.middleware.server.controller.lock.dto.UserAccountDto} object.
+     * @throws java.lang.Exception if any.
      */
     public void takeMoney(UserAccountDto dto) throws Exception {
         //查询用户账户实体记录
@@ -66,8 +68,8 @@ public class DataBaseLockService {
     /**
      * 乐观锁处理方式
      *
-     * @param dto
-     * @throws Exception
+     * @param dto a {@link com.debug.middleware.server.controller.lock.dto.UserAccountDto} object.
+     * @throws java.lang.Exception if any.
      */
     public void takeMoneyWithLock(UserAccountDto dto) throws Exception {
         //查询用户账户实体记录
@@ -100,8 +102,8 @@ public class DataBaseLockService {
     /**
      * 悲观锁处理方式
      *
-     * @param dto
-     * @throws Exception
+     * @param dto a {@link com.debug.middleware.server.controller.lock.dto.UserAccountDto} object.
+     * @throws java.lang.Exception if any.
      */
     public void takeMoneyWithLockNegative(UserAccountDto dto) throws Exception {
         //查询用户账户实体记录 - for update的方式

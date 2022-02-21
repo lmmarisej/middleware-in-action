@@ -1,6 +1,4 @@
-package com.debug.middleware.server.rabbitmq.consumer;/**
- * Created by Administrator on 2019/4/7.
- */
+package com.debug.middleware.server.rabbitmq.consumer;
 
 import com.debug.middleware.server.dto.UserLoginDto;
 import com.debug.middleware.server.service.SysLogService;
@@ -16,7 +14,9 @@ import org.springframework.stereotype.Component;
  *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/7 19:18
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Component
 public class LogConsumer {
     //定义日志
@@ -28,7 +28,7 @@ public class LogConsumer {
     /**
      * 监听消费并处理用户登录成功后的消息
      *
-     * @param loginDto
+     * @param loginDto a {@link com.debug.middleware.server.dto.UserLoginDto} object.
      */
     @RabbitListener(queues = "${mq.login.queue.name}", containerFactory = "singleListenerContainer")
     public void consumeMsg(@Payload UserLoginDto loginDto) {

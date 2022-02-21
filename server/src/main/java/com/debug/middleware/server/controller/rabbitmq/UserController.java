@@ -1,6 +1,4 @@
-package com.debug.middleware.server.controller.rabbitmq;/**
- * Created by Administrator on 2019/4/7.
- */
+package com.debug.middleware.server.controller.rabbitmq;
 
 import com.debug.middleware.api.enums.StatusCode;
 import com.debug.middleware.api.response.BaseResponse;
@@ -22,7 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/7 19:05
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @RestController
 public class UserController {
 
@@ -36,14 +36,16 @@ public class UserController {
     /**
      * 用户登录
      *
-     * @return
+     * @param dto a {@link com.debug.middleware.server.dto.UserLoginDto} object.
+     * @param result a {@link org.springframework.validation.BindingResult} object.
+     * @return a {@link com.debug.middleware.api.response.BaseResponse} object.
      */
     @RequestMapping(value = prefix + "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public BaseResponse login(@RequestBody @Validated UserLoginDto dto, BindingResult result) {
         if (result.hasErrors()) {
             return new BaseResponse(StatusCode.InvalidParams);
         }
-        BaseResponse response = new BaseResponse(StatusCode.Success);
+        BaseResponse response;
         try {
             Boolean res = userService.login(dto);
             if (res) {

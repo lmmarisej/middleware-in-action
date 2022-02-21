@@ -1,6 +1,4 @@
-package com.debug.middleware.server.rabbitmq.publisher;/**
- * Created by Administrator on 2019/4/7.
- */
+package com.debug.middleware.server.rabbitmq.publisher;
 
 import com.debug.middleware.server.rabbitmq.entity.KnowledgeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,9 +16,9 @@ import org.springframework.stereotype.Component;
 /**
  * 确认消费模式-生产者
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/4/7 8:29
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Component
 public class KnowledgePublisher {
 
@@ -39,16 +37,17 @@ public class KnowledgePublisher {
     /**
      * 基于AUTO机制-生产者发送消息
      *
-     * @param info
+     * @param info a {@link com.debug.middleware.server.rabbitmq.entity.KnowledgeInfo} object.
      */
     public void sendAutoMsg(KnowledgeInfo info) {
         try {
             if (info != null) {
                 rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
-                rabbitTemplate.setExchange(env.getProperty("mq.auto.knowledge.exchange.name"));
+                rabbitTemplate.setExchange(env.getProperty("mq.auto.knowledge.exchange.name"));     // 指定自动确认交换机
                 rabbitTemplate.setRoutingKey(env.getProperty("mq.auto.knowledge.routing.key.name"));
 
-                Message message = MessageBuilder.withBody(objectMapper.writeValueAsBytes(info))
+                Message message = MessageBuilder
+                        .withBody(objectMapper.writeValueAsBytes(info))
                         .setDeliveryMode(MessageDeliveryMode.PERSISTENT)
                         .build();
                 rabbitTemplate.convertAndSend(message);

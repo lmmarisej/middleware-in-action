@@ -21,8 +21,12 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * <p>RedService class.</p>
+ *
  * @author: zhonglinsen
  * @date: 2019/3/18
+ * @author lmmarise.j
+ * @version $Id: $Id
  */
 @Service
 @EnableAsync
@@ -41,6 +45,8 @@ public class RedService implements IRedService {
 
 
     /**
+     * {@inheritDoc}
+     *
      * 发红包记录
      */
     @Override
@@ -64,6 +70,8 @@ public class RedService implements IRedService {
     }
 
     /**
+     * {@inheritDoc}
+     *
      * 抢红包记录
      */
     @Override

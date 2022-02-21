@@ -5,6 +5,8 @@ package com.debug.middleware.server.utils;
  *
  * @author: zhonglinsen
  * @date: 2019/2/27
+ * @author lmmarise.j
+ * @version $Id: $Id
  */
 public class SnowFlake {
 
@@ -39,6 +41,12 @@ public class SnowFlake {
     private long sequence = 0L; //序列号
     private long lastStamp = -1L;//上一次时间戳
 
+    /**
+     * <p>Constructor for SnowFlake.</p>
+     *
+     * @param dataCenterId a long.
+     * @param machineId a long.
+     */
     public SnowFlake(long dataCenterId, long machineId) {
         if (dataCenterId > MAX_DATA_CENTER_NUM || dataCenterId < 0) {
             throw new IllegalArgumentException("dataCenterId can't be greater than MAX_DATA_CENTER_NUM or less than 0");
@@ -53,7 +61,7 @@ public class SnowFlake {
     /**
      * 产生下一个ID
      *
-     * @return
+     * @return a long.
      */
     public synchronized long nextId() {
         long currStamp = getNewStamp();

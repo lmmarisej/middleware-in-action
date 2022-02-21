@@ -1,6 +1,4 @@
-package com.debug.middleware.server;/**
- * Created by Administrator on 2019/3/30.
- */
+package com.debug.middleware.server;
 
 import com.debug.middleware.server.rabbitmq.entity.DeadInfo;
 import com.debug.middleware.server.rabbitmq.entity.EventInfo;
@@ -33,7 +31,7 @@ public class RabbitmqTest {
     private BasicPublisher basicPublisher;
 
     @Test
-    public void test1() throws Exception {
+    public void test1() {
         String msg = "~~~~这是一串字符串消息~~~~";
         basicPublisher.sendMsg(msg);
     }
@@ -64,7 +62,7 @@ public class RabbitmqTest {
 
 
     @Test
-    public void test5() throws Exception {
+    public void test5() {
         String msg = "这是TopicExchange消息模型的消息";
 
         //此时相当于*，即java替代了*的位置;
@@ -85,7 +83,7 @@ public class RabbitmqTest {
     private KnowledgePublisher knowledgePublisher;
 
     @Test
-    public void test6() throws Exception {
+    public void test6() {
         KnowledgeInfo info = new KnowledgeInfo();
         info.setId(10010);
         info.setCode("auto");

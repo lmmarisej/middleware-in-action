@@ -12,14 +12,14 @@ import java.util.Comparator;
  *
  * @Author:debug (SteadyJack)
  * @Date: 2019/5/4 14:36
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 public class PraiseTotalComparator implements Comparator<PraiseRankDto> {
     /**
-     * 按照点赞总数进行排行
+     * {@inheritDoc}
      *
-     * @param o1 待比较的实体1
-     * @param o2 待比较的实体2
-     * @return
+     * 按照点赞总数进行排行
      */
     @Override
     public int compare(PraiseRankDto o1, PraiseRankDto o2) {

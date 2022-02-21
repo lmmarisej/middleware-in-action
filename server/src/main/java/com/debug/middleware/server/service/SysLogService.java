@@ -1,6 +1,4 @@
-package com.debug.middleware.server.service;/**
- * Created by Administrator on 2019/4/7.
- */
+package com.debug.middleware.server.service;
 
 import com.debug.middleware.model.entity.SysLog;
 import com.debug.middleware.model.mapper.SysLogMapper;
@@ -20,7 +18,9 @@ import java.util.Date;
  *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/7 19:07
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Service
 @EnableAsync
 public class SysLogService {
@@ -36,7 +36,7 @@ public class SysLogService {
     /**
      * 记录用户登录成功的信息入数据库
      *
-     * @param dto
+     * @param dto a {@link com.debug.middleware.server.dto.UserLoginDto} object.
      */
     @Async
     public void recordLog(UserLoginDto dto) {

@@ -15,7 +15,9 @@ import org.springframework.stereotype.Component;
  *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/28 22:07
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Component
 public class UserLoginPublisher {
     //定义日志
@@ -29,7 +31,7 @@ public class UserLoginPublisher {
     /**
      * 异步发送消息
      *
-     * @param dto
+     * @param dto a {@link com.debug.middleware.server.dto.UserLoginDto} object.
      */
     public void sendMsg(UserLoginDto dto) {
         try {

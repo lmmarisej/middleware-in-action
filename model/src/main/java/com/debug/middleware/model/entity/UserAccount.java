@@ -7,6 +7,9 @@ import java.math.BigDecimal;
 
 /**
  * 用户账户实体
+ *
+ * @author lmmarise.j
+ * @version $Id: $Id
  */
 @Data
 @ToString

@@ -23,7 +23,9 @@ import org.springframework.stereotype.Component;
  *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/9 23:17
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Component
 public class DeadPublisher {
     //定义日志
@@ -41,7 +43,7 @@ public class DeadPublisher {
     /**
      * 发送对象类型的消息入死信队列
      *
-     * @param info
+     * @param info a {@link com.debug.middleware.server.rabbitmq.entity.DeadInfo} object.
      */
     public void sendMsg(DeadInfo info) {
         try {

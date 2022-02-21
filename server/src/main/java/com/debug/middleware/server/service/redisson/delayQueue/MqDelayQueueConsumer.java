@@ -17,7 +17,9 @@ import org.springframework.stereotype.Component;
  *
  * @Author:debug (SteadyJack)
  * @Date: 2019/5/2 17:11
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Component
 public class MqDelayQueueConsumer {
     //定义日志
@@ -32,7 +34,7 @@ public class MqDelayQueueConsumer {
     /**
      * 监听消费真正队列中的消息
      *
-     * @param deadDto
+     * @param deadDto a {@link com.debug.middleware.server.dto.DeadDto} object.
      */
     @RabbitListener(queues = "${mq.redisson.real.queue.name}", containerFactory = "singleListenerContainer")
     public void consumeMsg(@Payload DeadDto deadDto) {

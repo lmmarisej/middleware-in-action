@@ -8,6 +8,12 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Getter
+/**
+ * <p>RedDetail class.</p>
+ *
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Setter
 @ToString
 public class RedDetail {

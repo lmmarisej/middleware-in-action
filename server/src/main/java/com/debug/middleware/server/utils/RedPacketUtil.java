@@ -7,13 +7,21 @@ import java.util.Random;
 
 /**
  * 二倍均值法的代码实战
+ *
+ * @author lmmarise.j
+ * @version $Id: $Id
  */
 public class RedPacketUtil {
 
+    /** Constant <code>MAX_REA_COUNT=100</code> */
     public static final int MAX_REA_COUNT = 100;
 
     /**
      * 发红包算法，金额参数以分为单位
+     *
+     * @param totalAmount a {@link java.lang.Integer} object.
+     * @param totalPeopleNum a {@link java.lang.Integer} object.
+     * @return a {@link java.util.List} object.
      */
     public static List<Integer> divideRedPackage(Integer totalAmount, Integer totalPeopleNum) {
         paramVerify(totalAmount, totalPeopleNum);

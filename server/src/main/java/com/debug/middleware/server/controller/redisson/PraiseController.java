@@ -22,6 +22,8 @@ import java.util.Map;
  * 博客点赞Controller
  *
  * @author: zhonglinsen
+ * @author lmmarise.j
+ * @version $Id: $Id
  */
 @RestController
 public class PraiseController {
@@ -36,7 +38,9 @@ public class PraiseController {
     /**
      * 点赞
      *
-     * @return
+     * @param dto a {@link com.debug.middleware.server.dto.PraiseDto} object.
+     * @param result a {@link org.springframework.validation.BindingResult} object.
+     * @return a {@link com.debug.middleware.api.response.BaseResponse} object.
      */
     @RequestMapping(value = prefix + "/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public BaseResponse addPraise(@RequestBody @Validated PraiseDto dto, BindingResult result) {
@@ -70,7 +74,9 @@ public class PraiseController {
     /**
      * 取消点赞
      *
-     * @return
+     * @param dto a {@link com.debug.middleware.server.dto.PraiseDto} object.
+     * @param result a {@link org.springframework.validation.BindingResult} object.
+     * @return a {@link com.debug.middleware.api.response.BaseResponse} object.
      */
     @RequestMapping(value = prefix + "/cancel", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public BaseResponse cancelPraise(@RequestBody @Validated PraiseDto dto, BindingResult result) {
@@ -102,7 +108,7 @@ public class PraiseController {
     /**
      * 获取博客点赞排行榜
      *
-     * @return
+     * @return a {@link com.debug.middleware.api.response.BaseResponse} object.
      */
     @RequestMapping(value = prefix + "/total/rank", method = RequestMethod.GET)
     public BaseResponse rankPraise() {

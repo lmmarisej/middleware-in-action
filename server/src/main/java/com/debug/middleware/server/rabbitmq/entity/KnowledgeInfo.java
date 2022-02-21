@@ -1,6 +1,4 @@
-package com.debug.middleware.server.rabbitmq.entity;/**
- * Created by Administrator on 2019/4/7.
- */
+package com.debug.middleware.server.rabbitmq.entity;
 
 import lombok.Data;
 import lombok.ToString;
@@ -10,9 +8,9 @@ import java.io.Serializable;
 /**
  * 确认消费实体对象信息
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/4/7 8:28
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Data
 @ToString
 public class KnowledgeInfo implements Serializable {

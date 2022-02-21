@@ -10,10 +10,17 @@ import org.slf4j.LoggerFactory;
  *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/14 17:16
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 public class LockOne {
     private static final Logger log = LoggerFactory.getLogger(LockOne.class);
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main(String args[]) {
         Thread tAdd = new Thread(new LockThread(100));
         Thread tSub = new Thread(new LockThread(-100));
@@ -23,6 +30,11 @@ public class LockOne {
 }
 
 //模拟锁机制的线程类
+/**
+ * <p>Constructor for LockThread.</p>
+ *
+ * @param count a int.
+ */
 class LockThread implements Runnable {
     private static final Logger log = LoggerFactory.getLogger(LockThread.class);
 
@@ -34,9 +46,11 @@ class LockThread implements Runnable {
         this.count = count;
     }
 
-    /**
-     * 线程操作共享资源的方法体-不加同步锁
-     */
+/**
+ * {@inheritDoc}
+ *
+ * 线程操作共享资源的方法体-不加同步锁
+ */
 //    @Override
 //    public void run() {
 //        try {

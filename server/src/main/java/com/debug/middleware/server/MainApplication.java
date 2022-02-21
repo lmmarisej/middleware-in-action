@@ -20,16 +20,24 @@ import org.springframework.core.env.Environment;
  *
  * @Author:debug (SteadyJack)
  * @Date: 2019/3/2 17:58
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @SpringBootApplication
 @MapperScan(basePackages = "com.debug.middleware.model")
 public class MainApplication extends SpringBootServletInitializer {
 
+    /** {@inheritDoc} */
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         return super.configure(builder);
     }
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main(String[] args) {
         SpringApplication.run(MainApplication.class, args);
     }
@@ -39,6 +47,11 @@ public class MainApplication extends SpringBootServletInitializer {
     private Environment env;
 
     //自定义注入Bean-ZooKeeper高度封装过的客户端Curator实例
+    /**
+     * <p>curatorFramework.</p>
+     *
+     * @return a {@link org.apache.curator.framework.CuratorFramework} object.
+     */
     @Bean
     public CuratorFramework curatorFramework() {
         //创建CuratorFramework实例

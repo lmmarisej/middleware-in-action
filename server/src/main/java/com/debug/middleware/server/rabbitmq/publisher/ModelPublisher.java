@@ -1,6 +1,4 @@
-package com.debug.middleware.server.rabbitmq.publisher;/**
- * Created by Administrator on 2019/3/31.
- */
+package com.debug.middleware.server.rabbitmq.publisher;
 
 import com.debug.middleware.server.rabbitmq.entity.EventInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,12 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
+
 /**
  * 消息模型-生产者
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/3/31 21:52
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Component
 public class ModelPublisher {
 
@@ -38,8 +38,13 @@ public class ModelPublisher {
 
     /**
      * 发送消息-基于FanoutExchange消息模型
+     * <p>
+     * 扇形交换机会把能接收到的消息全部发送给绑定在自己身上的队列。
+     * 因为广播不需要“思考”，所以扇形交换机处理消息的速度也是所有的交换机类型里面最快的。
+     * <p>
+     * <img src="doc-files/img.png" width="400" />
      *
-     * @param info
+     * @param info a {@link com.debug.middleware.server.rabbitmq.entity.EventInfo} object.
      */
     public void sendMsgFanout(EventInfo info) {
         if (info != null) {
@@ -59,8 +64,14 @@ public class ModelPublisher {
 
     /**
      * 发送消息-基于DirectExchange消息模型-one
+     * <p>
+     * 一个队列会和一个交换机绑定，除此之外再绑定一个routing_key，当消息被发送的时候，需要指定一个binding_key，这个消息被送达交换机的时候，
+     * 就会被这个交换机送到指定的队列里面去。
+     * 同样的一个binding_key也是支持应用到多个队列中的。
+     * <p>
+     * <img src="doc-files/img_1.png" width="400" />
      *
-     * @param info
+     * @param info a {@link com.debug.middleware.server.rabbitmq.entity.EventInfo} object.
      */
     public void sendMsgDirectOne(EventInfo info) {
         if (info != null) {
@@ -83,7 +94,7 @@ public class ModelPublisher {
     /**
      * 发送消息-基于DirectExchange消息模型-two
      *
-     * @param info
+     * @param info a {@link com.debug.middleware.server.rabbitmq.entity.EventInfo} object.
      */
     public void sendMsgDirectTwo(EventInfo info) {
         if (info != null) {
@@ -106,8 +117,18 @@ public class ModelPublisher {
 
     /**
      * 发送消息-基于TopicExchange消息模型
+     * <p>
+     * 发送到主题交换机上的消息需要携带指定规则的routing_key，主题交换机会根据这个规则将数据发送到对应的(多个)队列上。
+     * <p>
+     * 主题交换机的routing_key需要有一定的规则，交换机和队列的binding_key需要采用*.#.*.....的格式，每个部分用.分开，其中：
+     * <li>* 表示一个单词
+     * <li># 表示任意数量（零个或多个）单词。
+     * <p>
+     * 示例：<p>
+     * <img src="doc-files/img_2.png" width="400" />
      *
-     * @param msg
+     * @param msg        a {@link java.lang.String} object.
+     * @param routingKey a {@link java.lang.String} object.
      */
     public void sendMsgTopic(String msg, String routingKey) {
         //判断对象是否为null
@@ -121,7 +142,7 @@ public class ModelPublisher {
                 rabbitTemplate.setRoutingKey(routingKey);
 
                 //创建消息
-                Message message = MessageBuilder.withBody(msg.getBytes("utf-8")).build();
+                Message message = MessageBuilder.withBody(msg.getBytes(StandardCharsets.UTF_8)).build();
                 //发送消息
                 rabbitTemplate.convertAndSend(message);
 

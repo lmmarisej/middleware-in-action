@@ -16,9 +16,9 @@ import org.springframework.stereotype.Component;
 /**
  * 死信队列-真正队列消费者-用户下单支付超时消息模型
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/4/9 20:42
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Component
 public class DeadOrderConsumer {
     //定义日志
@@ -36,7 +36,7 @@ public class DeadOrderConsumer {
     /**
      * 用户下单支付超时消息模型-监听真正队列
      *
-     * @param orderId
+     * @param orderId a {@link java.lang.Integer} object.
      */
     @RabbitListener(queues = "${mq.consumer.order.real.queue.name}", containerFactory = "singleListenerContainer")
     public void consumeMsg(@Payload Integer orderId) {

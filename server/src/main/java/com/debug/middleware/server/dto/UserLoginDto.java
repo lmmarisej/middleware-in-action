@@ -1,6 +1,4 @@
-package com.debug.middleware.server.dto;/**
- * Created by Administrator on 2019/4/7.
- */
+package com.debug.middleware.server.dto;
 
 import lombok.Data;
 import lombok.ToString;
@@ -13,7 +11,9 @@ import java.io.Serializable;
  *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/7 19:05
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Data
 @ToString
 public class UserLoginDto implements Serializable {

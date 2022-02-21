@@ -1,6 +1,4 @@
-package com.debug.middleware.server.rabbitmq.consumer;/**
- * Created by Administrator on 2019/3/30.
- */
+package com.debug.middleware.server.rabbitmq.consumer;
 
 import com.debug.middleware.server.rabbitmq.entity.Person;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,9 +14,9 @@ import java.nio.charset.StandardCharsets;
 /**
  * 基本消息模型-消费者
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/3/30 23:15
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Component
 public class BasicConsumer {
 
@@ -29,14 +27,14 @@ public class BasicConsumer {
 
     /**
      * 监听并消费队列中的消息-在这里采用单一容器工厂实例即可
+     *
+     * @param msg an array of byte.
      */
     @RabbitListener(queues = "${mq.basic.info.queue.name}", containerFactory = "singleListenerContainer")
     public void consumeMsg(@Payload byte[] msg) {
         try {
             String message = new String(msg, StandardCharsets.UTF_8);
             log.info("基本消息模型-消费者-监听消费到消息：{} ", message);
-
-
         } catch (Exception e) {
             log.error("基本消息模型-消费者-发生异常：", e.fillInStackTrace());
         }
@@ -45,13 +43,13 @@ public class BasicConsumer {
 
     /**
      * 监听并消费队列中的消息-监听消费处理对象信息-在这里采用单一容器工厂实例即可
+     *
+     * @param person a {@link com.debug.middleware.server.rabbitmq.entity.Person} object.
      */
     @RabbitListener(queues = "${mq.object.info.queue.name}", containerFactory = "singleListenerContainer")
     public void consumeObjectMsg(@Payload Person person) {
         try {
             log.info("基本消息模型-监听消费处理对象信息-消费者-监听消费到消息：{} ", person);
-
-
         } catch (Exception e) {
             log.error("基本消息模型-监听消费处理对象信息-消费者-发生异常：", e.fillInStackTrace());
         }

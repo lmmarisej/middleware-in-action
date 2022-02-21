@@ -18,7 +18,9 @@ import org.springframework.stereotype.Component;
  *
  * @Author:debug (SteadyJack)
  * @Date: 2019/5/2 10:10
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Component
 public class QueueConsumer implements ApplicationRunner, Ordered {
     //定义日志
@@ -28,6 +30,8 @@ public class QueueConsumer implements ApplicationRunner, Ordered {
     private RedissonClient redissonClient;
 
     /**
+     * {@inheritDoc}
+     *
      * 在项目运行启动成功之后执行该run方法
      */
     @Override
@@ -53,6 +57,7 @@ public class QueueConsumer implements ApplicationRunner, Ordered {
     /*
     表示QueueConsumer将会在项目启动之后而跟随启动
      */
+    /** {@inheritDoc} */
     @Override
     public int getOrder() {
         return -1;

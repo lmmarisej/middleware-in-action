@@ -1,6 +1,4 @@
-package com.debug.middleware.server.service;/**
- * Created by Administrator on 2019/4/7.
- */
+package com.debug.middleware.server.service;
 
 import com.debug.middleware.model.entity.User;
 import com.debug.middleware.model.mapper.UserMapper;
@@ -16,7 +14,9 @@ import org.springframework.stereotype.Service;
  *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/7 19:12
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Service
 public class UserService {
 
@@ -32,9 +32,9 @@ public class UserService {
     /**
      * 用户登录服务
      *
-     * @param dto
-     * @return
-     * @throws Exception
+     * @param dto a {@link com.debug.middleware.server.dto.UserLoginDto} object.
+     * @return a {@link java.lang.Boolean} object.
+     * @throws java.lang.Exception if any.
      */
     public Boolean login(UserLoginDto dto) throws Exception {
         User user = userMapper.selectByUserNamePassword(dto.getUserName(), dto.getPassword());

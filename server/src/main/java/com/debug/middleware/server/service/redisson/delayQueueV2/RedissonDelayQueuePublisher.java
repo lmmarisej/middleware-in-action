@@ -16,7 +16,9 @@ import java.util.concurrent.TimeUnit;
  *
  * @Author:debug (SteadyJack)
  * @Date: 2019/5/2 17:10
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Component
 public class RedissonDelayQueuePublisher {
     //定义日志

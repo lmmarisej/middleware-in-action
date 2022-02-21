@@ -21,7 +21,9 @@ import java.util.Date;
  *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/11 23:34
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Service
 public class DeadUserOrderService {
 
@@ -40,8 +42,8 @@ public class DeadUserOrderService {
     /**
      * 用户下单 - 并将生成的下单记录Id压入死信队列中等待延迟处理
      *
-     * @param userOrderDto
-     * @throws Exception
+     * @param userOrderDto a {@link com.debug.middleware.server.dto.UserOrderDto} object.
+     * @throws java.lang.Exception if any.
      */
     public void pushUserOrder(UserOrderDto userOrderDto) throws Exception {
         //创建用户下单实例
@@ -66,7 +68,7 @@ public class DeadUserOrderService {
     /**
      * 更新用户下单记录的状态
      *
-     * @param userOrder
+     * @param userOrder a {@link com.debug.middleware.model.entity.UserOrder} object.
      */
     public void updateUserOrderRecord(UserOrder userOrder) {
         try {

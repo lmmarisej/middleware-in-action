@@ -16,6 +16,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * 缓存穿透service
  * Created by Administrator on 2019/3/17.
+ *
+ * @author lmmarise.j
+ * @version $Id: $Id
  */
 @Service
 public class CachePassService {
@@ -31,10 +34,15 @@ public class CachePassService {
     @Autowired
     private ObjectMapper objectMapper;
 
+    /** Constant <code>keyPrefix="item:"</code> */
     public static final String keyPrefix = "item:";
 
     /**
      * 获取商品详情-如果缓存有，则从缓存中获取；如果没有，则从数据库查询，并将查询结果塞入缓存中
+     *
+     * @param itemCode a {@link java.lang.String} object.
+     * @return a {@link com.debug.middleware.model.entity.Item} object.
+     * @throws java.lang.Exception if any.
      */
     public Item getItemInfo(String itemCode) throws Exception {
         Item item;
@@ -57,11 +65,21 @@ public class CachePassService {
         return item;
     }
 
+    /**
+     * <p>update.</p>
+     *
+     * @param item a {@link com.debug.middleware.model.entity.Item} object.
+     */
     public void update(Item item) {
         itemMapper.updateByPrimaryKeySelective(item);
         redisTemplate.expire(keyPrefix + item.getCode(), 0, TimeUnit.MICROSECONDS);
     }
 
+    /**
+     * <p>addItem.</p>
+     *
+     * @param item a {@link com.debug.middleware.model.entity.Item} object.
+     */
     public void addItem(Item item) {
         itemMapper.insert(item);
         try {
@@ -70,6 +88,11 @@ public class CachePassService {
         }
     }
 
+    /**
+     * <p>deleteItem.</p>
+     *
+     * @param itemCode a {@link java.lang.String} object.
+     */
     public void deleteItem(String itemCode)  {
         itemMapper.deleteByCode(itemCode);
         redisTemplate.expire(keyPrefix + itemCode, 0, TimeUnit.MICROSECONDS);

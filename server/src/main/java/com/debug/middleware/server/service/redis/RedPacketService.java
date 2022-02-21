@@ -19,8 +19,12 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * <p>RedPacketService class.</p>
+ *
  * @author: zhonglinsen
  * @date: 2019/3/15
+ * @author lmmarise.j
+ * @version $Id: $Id
  */
 @Service
 public class RedPacketService implements IRedPacketService {
@@ -40,6 +44,8 @@ public class RedPacketService implements IRedPacketService {
 
 
     /**
+     * {@inheritDoc}
+     *
      * 发红包
      */
     @Override
@@ -66,6 +72,8 @@ public class RedPacketService implements IRedPacketService {
     }
 
     /**
+     * {@inheritDoc}
+     *
      * 加分布式锁的情况
      * 抢红包-分“点”与“抢”处理逻辑
      */

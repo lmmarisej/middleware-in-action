@@ -25,6 +25,8 @@ import java.util.concurrent.TimeUnit;
  *
  * @author: zhonglinsen
  * @date: 2019/1/15
+ * @author lmmarise.j
+ * @version $Id: $Id
  */
 @Service
 public class PraiseService implements IPraiseService {
@@ -46,10 +48,9 @@ public class PraiseService implements IPraiseService {
     private RedissonClient redissonClient;
 
     /**
-     * 点赞博客-无锁
+     * {@inheritDoc}
      *
-     * @param dto
-     * @throws Exception
+     * 点赞博客-无锁
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -84,10 +85,9 @@ public class PraiseService implements IPraiseService {
     }
 
     /**
-     * 点赞博客-加分布式锁-针对同一用户高并发重复点赞的情况
+     * {@inheritDoc}
      *
-     * @param dto 请求信息
-     * @throws Exception
+     * 点赞博客-加分布式锁-针对同一用户高并发重复点赞的情况
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -140,10 +140,9 @@ public class PraiseService implements IPraiseService {
 
 
     /**
-     * 取消点赞博客
+     * {@inheritDoc}
      *
-     * @param dto
-     * @throws Exception
+     * 取消点赞博客
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -166,11 +165,9 @@ public class PraiseService implements IPraiseService {
     }
 
     /**
-     * 获取博客的点赞数量
+     * {@inheritDoc}
      *
-     * @param blogId 博客id
-     * @return
-     * @throws Exception
+     * 获取博客的点赞数量
      */
     @Override
     public Long getBlogPraiseTotal(Integer blogId) throws Exception {
@@ -180,10 +177,9 @@ public class PraiseService implements IPraiseService {
 
 
     /**
-     * 获取博客点赞总数排行榜-采用缓存
+     * {@inheritDoc}
      *
-     * @return 返回排行榜
-     * @throws Exception
+     * 获取博客点赞总数排行榜-采用缓存
      */
     @Override
     public Collection<PraiseRankDto> getRankWithRedisson() throws Exception {
@@ -191,10 +187,9 @@ public class PraiseService implements IPraiseService {
     }
 
     /**
-     * 获取博客点赞总数排行榜-不采用缓存
+     * {@inheritDoc}
      *
-     * @return 返回排行榜
-     * @throws Exception
+     * 获取博客点赞总数排行榜-不采用缓存
      */
     @Override
     public Collection<PraiseRankDto> getRankNoRedisson() throws Exception {

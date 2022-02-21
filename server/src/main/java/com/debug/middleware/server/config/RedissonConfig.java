@@ -15,7 +15,9 @@ import org.springframework.core.env.Environment;
  *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/27 13:34
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Configuration
 public class RedissonConfig {
 
@@ -25,7 +27,7 @@ public class RedissonConfig {
     /**
      * 自定义注入配置操作Redisson的客户端实例
      *
-     * @return
+     * @return a {@link org.redisson.api.RedissonClient} object.
      */
     @Bean
     public RedissonClient config() {

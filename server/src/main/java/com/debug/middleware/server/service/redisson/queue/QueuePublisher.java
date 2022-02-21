@@ -14,7 +14,9 @@ import org.springframework.stereotype.Component;
  *
  * @Author:debug (SteadyJack)
  * @Date: 2019/5/2 10:10
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Component
 public class QueuePublisher {
     //定义日志

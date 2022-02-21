@@ -1,6 +1,4 @@
-package com.debug.middleware.server.rabbitmq.consumer;/**
- * Created by Administrator on 2019/3/31.
- */
+package com.debug.middleware.server.rabbitmq.consumer;
 
 import com.debug.middleware.server.rabbitmq.entity.EventInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,12 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
+
 /**
  * 消息模型-消费者
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/3/31 21:52
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Component
 public class ModelConsumer {
 
@@ -27,14 +27,14 @@ public class ModelConsumer {
 
     /**
      * 监听并消费队列中的消息-fanoutExchange-one
+     *
+     * @param msg an array of byte.
      */
     @RabbitListener(queues = "${mq.fanout.queue.one.name}", containerFactory = "singleListenerContainer")
     public void consumeFanoutMsgOne(@Payload byte[] msg) {
         try {
             EventInfo info = objectMapper.readValue(msg, EventInfo.class);
             log.info("消息模型fanoutExchange-one-消费者-监听消费到消息：{} ", info);
-
-
         } catch (Exception e) {
             log.error("消息模型-消费者-发生异常：", e.fillInStackTrace());
         }
@@ -42,6 +42,8 @@ public class ModelConsumer {
 
     /**
      * 监听并消费队列中的消息-fanoutExchange-two
+     *
+     * @param msg an array of byte.
      */
     @RabbitListener(queues = "${mq.fanout.queue.two.name}", containerFactory = "singleListenerContainer")
     public void consumeFanoutMsgTwo(@Payload byte[] msg) {
@@ -58,6 +60,8 @@ public class ModelConsumer {
 
     /**
      * 监听并消费队列中的消息-directExchange-one
+     *
+     * @param msg an array of byte.
      */
     @RabbitListener(queues = "${mq.direct.queue.one.name}", containerFactory = "singleListenerContainer")
     public void consumeDirectMsgOne(@Payload byte[] msg) {
@@ -73,6 +77,8 @@ public class ModelConsumer {
 
     /**
      * 监听并消费队列中的消息-directExchange-two
+     *
+     * @param msg an array of byte.
      */
     @RabbitListener(queues = "${mq.direct.queue.two.name}", containerFactory = "singleListenerContainer")
     public void consumeDirectMsgTwo(@Payload byte[] msg) {
@@ -89,11 +95,13 @@ public class ModelConsumer {
 
     /**
      * 监听并消费队列中的消息-topicExchange-*通配符
+     *
+     * @param msg an array of byte.
      */
     @RabbitListener(queues = "${mq.topic.queue.one.name}", containerFactory = "singleListenerContainer")
     public void consumeTopicMsgOne(@Payload byte[] msg) {
         try {
-            String message = new String(msg, "utf-8");
+            String message = new String(msg, StandardCharsets.UTF_8);
             log.info("消息模型topicExchange-*-消费者-监听消费到消息：{} ", message);
 
 
@@ -105,14 +113,14 @@ public class ModelConsumer {
 
     /**
      * 监听并消费队列中的消息-topicExchange-#通配符
+     *
+     * @param msg an array of byte.
      */
     @RabbitListener(queues = "${mq.topic.queue.two.name}", containerFactory = "singleListenerContainer")
     public void consumeTopicMsgTwo(@Payload byte[] msg) {
         try {
-            String message = new String(msg, "utf-8");
+            String message = new String(msg, StandardCharsets.UTF_8);
             log.info("消息模型topicExchange-#-消费者-监听消费到消息：{} ", message);
-
-
         } catch (Exception e) {
             log.error("消息模型topicExchange-#-消费者-监听消费发生异常：", e.fillInStackTrace());
         }

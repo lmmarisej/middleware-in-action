@@ -1,6 +1,4 @@
-package com.debug.middleware.server.rabbitmq.publisher;/**
- * Created by Administrator on 2019/4/7.
- */
+package com.debug.middleware.server.rabbitmq.publisher;
 
 import com.debug.middleware.server.dto.UserLoginDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,9 +19,9 @@ import org.springframework.stereotype.Component;
 /**
  * 系统日志记录-生产者
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/4/7 19:18
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Component
 public class LogPublisher {
     //定义日志
@@ -41,7 +39,7 @@ public class LogPublisher {
     /**
      * 发送登录成功后的用户相关信息入队列
      *
-     * @param loginDto
+     * @param loginDto a {@link com.debug.middleware.server.dto.UserLoginDto} object.
      */
     public void sendLogMsg(UserLoginDto loginDto) {
         try {
@@ -49,14 +47,11 @@ public class LogPublisher {
             rabbitTemplate.setExchange(env.getProperty("mq.login.exchange.name"));
             rabbitTemplate.setRoutingKey(env.getProperty("mq.login.routing.key.name"));
 
-            rabbitTemplate.convertAndSend(loginDto, new MessagePostProcessor() {
-                @Override
-                public Message postProcessMessage(Message message) throws AmqpException {
-                    MessageProperties messageProperties = message.getMessageProperties();
-                    messageProperties.setDeliveryMode(MessageDeliveryMode.PERSISTENT);
-                    messageProperties.setHeader(AbstractJavaTypeMapper.DEFAULT_CONTENT_CLASSID_FIELD_NAME, UserLoginDto.class);
-                    return message;
-                }
+            rabbitTemplate.convertAndSend(loginDto, message -> {
+                MessageProperties messageProperties = message.getMessageProperties();
+                messageProperties.setDeliveryMode(MessageDeliveryMode.PERSISTENT);
+                messageProperties.setHeader(AbstractJavaTypeMapper.DEFAULT_CONTENT_CLASSID_FIELD_NAME, UserLoginDto.class);
+                return message;
             });
             log.info("系统日志记录-生产者-发送登录成功后的用户相关信息入队列-内容：{} ", loginDto);
         } catch (Exception e) {
@@ -64,32 +59,3 @@ public class LogPublisher {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

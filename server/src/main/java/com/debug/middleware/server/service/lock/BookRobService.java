@@ -24,7 +24,9 @@ import java.util.concurrent.TimeUnit;
  *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/21 23:36
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Service
 public class BookRobService {
     //定义日志实例
@@ -39,8 +41,8 @@ public class BookRobService {
     /**
      * 处理书籍抢购逻辑-不加分布式锁
      *
-     * @param dto
-     * @throws Exception
+     * @param dto a {@link com.debug.middleware.server.controller.lock.dto.BookRobDto} object.
+     * @throws java.lang.Exception if any.
      */
     @Transactional(rollbackFor = Exception.class)
     public void robWithNoLock(BookRobDto dto) throws Exception {
@@ -84,8 +86,8 @@ public class BookRobService {
     /**
      * 处理书籍抢购逻辑-加ZooKeeper分布式锁
      *
-     * @param dto
-     * @throws Exception
+     * @param dto a {@link com.debug.middleware.server.controller.lock.dto.BookRobDto} object.
+     * @throws java.lang.Exception if any.
      */
     @Transactional(rollbackFor = Exception.class)
     public void robWithZKLock(BookRobDto dto) throws Exception {
@@ -144,8 +146,8 @@ public class BookRobService {
     /**
      * 处理书籍抢购逻辑-加Redisson分布式锁
      *
-     * @param dto
-     * @throws Exception
+     * @param dto a {@link com.debug.middleware.server.controller.lock.dto.BookRobDto} object.
+     * @throws java.lang.Exception if any.
      */
     @Transactional(rollbackFor = Exception.class)
     public void robWithRedisson(BookRobDto dto) throws Exception {

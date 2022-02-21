@@ -1,6 +1,4 @@
-package com.debug.middleware.server.rabbitmq.publisher;/**
- * Created by Administrator on 2019/4/7.
- */
+package com.debug.middleware.server.rabbitmq.publisher;
 
 import com.debug.middleware.server.rabbitmq.entity.KnowledgeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,9 +16,9 @@ import org.springframework.stereotype.Component;
 /**
  * 确认消费模式-手动确认消费-生产者
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/4/7 8:29
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Component
 public class KnowledgeManualPublisher {
 
@@ -39,7 +37,7 @@ public class KnowledgeManualPublisher {
     /**
      * 基于MANUAL机制-生产者发送消息
      *
-     * @param info
+     * @param info a {@link com.debug.middleware.server.rabbitmq.entity.KnowledgeInfo} object.
      */
     public void sendAutoMsg(KnowledgeInfo info) {
         try {

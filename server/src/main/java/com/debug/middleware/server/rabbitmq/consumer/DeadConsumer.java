@@ -14,9 +14,10 @@ import org.springframework.stereotype.Component;
 /**
  * 死信队列-真正队列消费者
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/4/9 20:42
- **/
+
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Component
 public class DeadConsumer {
     //定义日志
@@ -28,7 +29,7 @@ public class DeadConsumer {
     /**
      * 监听真正队列-消费队列中的消息 - 面向消费者
      *
-     * @param info
+     * @param info a {@link com.debug.middleware.server.rabbitmq.entity.DeadInfo} object.
      */
     @RabbitListener(queues = "${mq.consumer.real.queue.name}", containerFactory = "singleListenerContainer")
     public void consumeMsg(@Payload DeadInfo info) {

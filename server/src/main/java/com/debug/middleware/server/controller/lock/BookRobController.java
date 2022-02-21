@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/21 23:31
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @RestController
 public class BookRobController {
     //定义日志
@@ -33,8 +35,8 @@ public class BookRobController {
     /**
      * 用户抢购书籍请求
      *
-     * @param dto
-     * @return
+     * @param dto a {@link com.debug.middleware.server.controller.lock.dto.BookRobDto} object.
+     * @return a {@link com.debug.middleware.api.response.BaseResponse} object.
      */
     @RequestMapping(value = prefix + "/request", method = RequestMethod.GET)
     public BaseResponse takeMoney(BookRobDto dto) {

@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/17 20:31
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @RestController
 public class DataBaseLockController {
     //定义日志
@@ -36,8 +38,8 @@ public class DataBaseLockController {
     /**
      * 用户账户余额提现申请
      *
-     * @param dto
-     * @return
+     * @param dto a {@link com.debug.middleware.server.controller.lock.dto.UserAccountDto} object.
+     * @return a {@link com.debug.middleware.api.response.BaseResponse} object.
      */
     @RequestMapping(value = prefix + "/money/take", method = RequestMethod.GET)
     public BaseResponse takeMoney(UserAccountDto dto) {

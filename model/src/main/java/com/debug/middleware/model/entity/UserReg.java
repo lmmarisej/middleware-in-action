@@ -7,6 +7,9 @@ import java.util.Date;
 
 /**
  * 用户注册实体信息
+ *
+ * @author lmmarise.j
+ * @version $Id: $Id
  */
 @Data
 @ToString

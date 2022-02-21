@@ -27,7 +27,9 @@ import java.util.concurrent.TimeUnit;
  *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/20 20:24
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Service
 public class UserRegService {
     //定义日志实例
@@ -42,8 +44,8 @@ public class UserRegService {
     /**
      * 处理用户提交注册的请求-不加分布式锁
      *
-     * @param dto
-     * @throws Exception
+     * @param dto a {@link com.debug.middleware.server.controller.lock.dto.UserRegDto} object.
+     * @throws java.lang.Exception if any.
      */
     public void userRegNoLock(UserRegDto dto) throws Exception {
         //根据用户名查询用户实体信息
@@ -72,8 +74,8 @@ public class UserRegService {
     /**
      * 处理用户提交注册的请求-加分布式锁
      *
-     * @param dto
-     * @throws Exception
+     * @param dto a {@link com.debug.middleware.server.controller.lock.dto.UserRegDto} object.
+     * @throws java.lang.Exception if any.
      */
     public void userRegWithLock(UserRegDto dto) throws Exception {
         //精心设计并构造SETNX操作中的Key-一定要跟实际的业务或共享资源挂钩
@@ -133,8 +135,8 @@ public class UserRegService {
     /**
      * 处理用户提交注册的请求-加ZooKeeper分布式锁
      *
-     * @param dto
-     * @throws Exception
+     * @param dto a {@link com.debug.middleware.server.controller.lock.dto.UserRegDto} object.
+     * @throws java.lang.Exception if any.
      */
     public void userRegWithZKLock(UserRegDto dto) throws Exception {
         //创建ZooKeeper互斥锁组件实例，需要将监控用的客户端实例、精心构造的共享资源 作为构造参数
@@ -183,8 +185,8 @@ public class UserRegService {
     /**
      * 处理用户提交注册的请求-加Redisson分布式锁
      *
-     * @param dto
-     * @throws Exception
+     * @param dto a {@link com.debug.middleware.server.controller.lock.dto.UserRegDto} object.
+     * @throws java.lang.Exception if any.
      */
     public void userRegRedisson(UserRegDto dto) throws Exception {
         //定义锁的名称

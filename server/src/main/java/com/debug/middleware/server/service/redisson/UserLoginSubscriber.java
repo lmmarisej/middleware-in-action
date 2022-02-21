@@ -20,7 +20,9 @@ import org.springframework.stereotype.Component;
  *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/28 22:08
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Component
 public class UserLoginSubscriber implements ApplicationRunner, Ordered {
     //定义日志
@@ -35,10 +37,9 @@ public class UserLoginSubscriber implements ApplicationRunner, Ordered {
     private SysLogService sysLogService;
 
     /**
-     * 在这个方法里实现“不断地监听该主题中消息的动态” - 即间接地实现自动监听消费
+     * {@inheritDoc}
      *
-     * @param arguments
-     * @throws Exception
+     * 在这个方法里实现“不断地监听该主题中消息的动态” - 即间接地实现自动监听消费
      */
     @Override
     public void run(ApplicationArguments arguments) throws Exception {
@@ -62,9 +63,9 @@ public class UserLoginSubscriber implements ApplicationRunner, Ordered {
     }
 
     /**
-     * 设置项目启动时也跟着启动
+     * {@inheritDoc}
      *
-     * @return
+     * 设置项目启动时也跟着启动
      */
     @Override
     public int getOrder() {

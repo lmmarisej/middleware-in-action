@@ -16,7 +16,9 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @Author:debug (SteadyJack)
  * @Date: 2019/3/13 8:38
  * @Link：微信-debug0868 QQ-1948831260
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 public class CommonConfig {
 
     //Redis链接工厂
@@ -26,7 +28,7 @@ public class CommonConfig {
     /**
      * 缓存redis-redisTemplate
      *
-     * @return
+     * @return a {@link org.springframework.data.redis.core.RedisTemplate} object.
      */
     @Bean
     public RedisTemplate<String, Object> redisTemplate() {
@@ -42,6 +44,8 @@ public class CommonConfig {
 
     /**
      * 用于处理缓存中value的数据类型为字符串String的数据，包括String类型的数据，和序列化后为String类型的字符串数据。
+     *
+     * @return a {@link org.springframework.data.redis.core.StringRedisTemplate} object.
      */
     @Bean
     public StringRedisTemplate stringRedisTemplate() {

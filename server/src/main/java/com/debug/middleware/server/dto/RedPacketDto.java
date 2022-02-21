@@ -6,8 +6,12 @@ import lombok.ToString;
 import javax.validation.constraints.NotNull;
 
 /**
+ * <p>RedPacketDto class.</p>
+ *
  * @author: zhonglinsen
  * @date: 2019/3/15
+ * @author lmmarise.j
+ * @version $Id: $Id
  */
 @Data
 @ToString

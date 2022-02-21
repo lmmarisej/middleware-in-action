@@ -22,7 +22,9 @@ import org.springframework.stereotype.Component;
  *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/9 23:17
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Component
 public class DeadOrderPublisher {
     //定义日志
@@ -40,7 +42,7 @@ public class DeadOrderPublisher {
     /**
      * 发送用户下单记录id的消息入死信队列
      *
-     * @param orderId
+     * @param orderId a {@link java.lang.Integer} object.
      */
     public void sendMsg(Integer orderId) {
         try {

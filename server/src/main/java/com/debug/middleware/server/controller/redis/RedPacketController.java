@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 
 /**
+ * <p>RedPacketController class.</p>
+ *
  * @author: zhonglinsen
  * @date: 2019/3/15
+ * @author lmmarise.j
+ * @version $Id: $Id
  */
 @RestController
 public class RedPacketController {
@@ -31,6 +35,10 @@ public class RedPacketController {
 
     /**
      * 发
+     *
+     * @param dto a {@link com.debug.middleware.server.dto.RedPacketDto} object.
+     * @param result a {@link org.springframework.validation.BindingResult} object.
+     * @return a {@link com.debug.middleware.api.response.BaseResponse} object.
      */
     @RequestMapping(value = prefix + "/hand/out", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public BaseResponse handOut(@Validated @RequestBody RedPacketDto dto, BindingResult result) {
@@ -52,6 +60,10 @@ public class RedPacketController {
 
     /**
      * 抢
+     *
+     * @param userId a {@link java.lang.Integer} object.
+     * @param redId a {@link java.lang.String} object.
+     * @return a {@link com.debug.middleware.api.response.BaseResponse} object.
      */
     @RequestMapping(value = prefix + "/rob", method = RequestMethod.GET)
     public BaseResponse rob(@RequestParam Integer userId, @RequestParam String redId) {

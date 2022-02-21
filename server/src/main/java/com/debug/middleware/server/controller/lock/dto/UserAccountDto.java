@@ -12,7 +12,9 @@ import java.io.Serializable;
  *
  * @Author:debug (SteadyJack)
  * @Date: 2019/4/17 20:32
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Data
 @ToString
 public class UserAccountDto implements Serializable {

@@ -1,10 +1,9 @@
-package com.debug.middleware.server.event;/**
- * Created by Administrator on 2019/3/29.
- */
+package com.debug.middleware.server.event;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +13,9 @@ import java.util.Date;
 /**
  * spring的事件驱动模型-生产者
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/3/29 15:59
- **/
+ * @author lmmarise.j
+ * @version $Id: $Id
+ */
 @Component
 public class Publisher {
 
@@ -25,10 +24,13 @@ public class Publisher {
     @Autowired
     private ApplicationEventPublisher publisher;
 
-    public void sendMsg() throws Exception {
-        LoginEvent event = new LoginEvent(this, "debug", new SimpleDateFormat("yyyyy-MM-dd HH:mm:ss").format(new Date()), "127.0.0.1");
+    /**
+     * <p>sendMsg.</p>
+     *
+     * @param event a {@link org.springframework.context.ApplicationEvent} object.
+     */
+    public void sendMsg(ApplicationEvent event) {
         publisher.publishEvent(event);
         log.info("Spring事件驱动模型-发送消息：{}", event);
     }
-
 }

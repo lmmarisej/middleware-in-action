@@ -21,6 +21,8 @@ import java.util.concurrent.TimeUnit;
  *
  * @author: zhonglinsen
  * @date: 2019/1/15
+ * @author lmmarise.j
+ * @version $Id: $Id
  */
 @Component
 public class RedisPraise implements IRedisPraise {
@@ -33,12 +35,9 @@ public class RedisPraise implements IRedisPraise {
     private RedissonClient redissonClient;
 
     /**
-     * 缓存当前用户点赞博客的记录
+     * {@inheritDoc}
      *
-     * @param blogId 博客id
-     * @param uId    用户id
-     * @param status 点赞状态（1=正常点赞；0=取消点赞）
-     * @throws Exception
+     * 缓存当前用户点赞博客的记录
      */
     @Override
     public void cachePraiseBlog(Integer blogId, Integer uId, Integer status) throws Exception {
@@ -79,11 +78,9 @@ public class RedisPraise implements IRedisPraise {
     }
 
     /**
-     * 获取博客总的点赞数
+     * {@inheritDoc}
      *
-     * @param blogId 博客id
-     * @return
-     * @throws Exception
+     * 获取博客总的点赞数
      */
     @Override
     public Long getCacheTotalBlog(Integer blogId) throws Exception {
@@ -128,9 +125,9 @@ public class RedisPraise implements IRedisPraise {
     private PraiseMapper praiseMapper;
 
     /**
-     * 博客点赞总数排行榜
+     * {@inheritDoc}
      *
-     * @throws Exception
+     * 博客点赞总数排行榜
      */
     @Override
     public void rankBlogPraise() throws Exception {
@@ -150,9 +147,9 @@ public class RedisPraise implements IRedisPraise {
     }
 
     /**
-     * 获得博客点赞排行榜
+     * {@inheritDoc}
      *
-     * @throws Exception
+     * 获得博客点赞排行榜
      */
     @Override
     public List<PraiseRankDto> getBlogPraiseRank() throws Exception {
