@@ -6,8 +6,6 @@ import com.debug.middleware.api.enums.StatusCode;
 /**
  * <p>BaseResponse class.</p>
  *
- * @author: debug
- * @date: 2018/12/129
  * @author lmmarise.j
  * @version $Id: $Id
  */

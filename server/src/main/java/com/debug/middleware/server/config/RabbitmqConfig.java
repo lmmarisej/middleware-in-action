@@ -509,11 +509,12 @@ public class RabbitmqConfig {
     @Bean
     public Queue basicDeadQueue() {
         Map<String, Object> args = new HashMap();
+        // 重新设置消息的投递路由和投递交换机
         args.put("x-dead-letter-exchange", env.getProperty("mq.dead.exchange.name"));
         args.put("x-dead-letter-routing-key", env.getProperty("mq.dead.routing.key.name"));
 
         //设定TTL，单位为ms，在这里指的是10s
-        args.put("x-message-ttl", 10000);
+        args.put("x-message-ttl", 10000);  // 消息超时后，由MQ将其投递到上面指定的交换机，交换机通过上面指定的路由key再投递到指定的队列，消费者拉取队列中消息进行消费
         return new Queue(env.getProperty("mq.dead.queue.name"), true, false, false, args);
     }
 
@@ -536,6 +537,7 @@ public class RabbitmqConfig {
      */
     @Bean
     public Binding basicProducerBinding() {
+        // 如果交换机接收到的路由key是mq.producer.basic.routing.key.name，就将消息放入死信队列
         return BindingBuilder.bind(basicDeadQueue()).to(basicProducerExchange()).with(env.getProperty("mq.producer.basic.routing.key.name"));
     }
 
@@ -569,6 +571,7 @@ public class RabbitmqConfig {
      */
     @Bean
     public Binding basicDeadBinding() {
+        // 如果交换机接收到的消息的路由key为mq.dead.routing.key.name，就投递到消费者的队列
         return BindingBuilder.bind(realConsumerQueue()).to(basicDeadExchange()).with(env.getProperty("mq.dead.routing.key.name"));
     }
 

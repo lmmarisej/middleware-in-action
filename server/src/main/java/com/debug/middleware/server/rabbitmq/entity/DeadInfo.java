@@ -10,8 +10,6 @@ import java.io.Serializable;
 /**
  * <p>DeadInfo class.</p>
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/4/9 23:18
  * @author lmmarise.j
  * @version $Id: $Id
  */

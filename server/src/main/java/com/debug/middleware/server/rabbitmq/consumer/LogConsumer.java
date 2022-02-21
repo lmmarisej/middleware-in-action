@@ -12,8 +12,6 @@ import org.springframework.stereotype.Component;
 /**
  * 系统日志记录-消费者
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/4/7 19:18
  * @author lmmarise.j
  * @version $Id: $Id
  */

@@ -21,8 +21,6 @@ import org.springframework.stereotype.Component;
 /**
  * 死信队列-生产者
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/4/9 23:17
  * @author lmmarise.j
  * @version $Id: $Id
  */
@@ -55,21 +53,18 @@ public class DeadPublisher {
             rabbitTemplate.setRoutingKey(env.getProperty("mq.producer.basic.routing.key.name"));
 
             //发送对象类型的消息
-            rabbitTemplate.convertAndSend(info, new MessagePostProcessor() {
-                @Override
-                public Message postProcessMessage(Message message) throws AmqpException {
-                    //获取消息属性对象
-                    MessageProperties messageProperties = message.getMessageProperties();
-                    //设置消息的持久化策略
-                    messageProperties.setDeliveryMode(MessageDeliveryMode.PERSISTENT);
-                    //设置消息头-即直接指定发送的消息所属的对象类型
-                    messageProperties.setHeader(AbstractJavaTypeMapper.DEFAULT_CONTENT_CLASSID_FIELD_NAME, DeadInfo.class);
+            rabbitTemplate.convertAndSend(info, message -> {
+                //获取消息属性对象
+                MessageProperties messageProperties = message.getMessageProperties();
+                //设置消息的持久化策略
+                messageProperties.setDeliveryMode(MessageDeliveryMode.PERSISTENT);
+                //设置消息头-即直接指定发送的消息所属的对象类型
+                messageProperties.setHeader(AbstractJavaTypeMapper.DEFAULT_CONTENT_CLASSID_FIELD_NAME, DeadInfo.class);
 
-                    //设置消息的TTL - 当消息和队列同时都设置了TTL时，则取较短时间的值
-                    //messageProperties.setExpiration(String.valueOf(10000));
+                //设置消息的TTL - 当消息和队列同时都设置了TTL时，则取较短时间的值
+                //messageProperties.setExpiration(String.valueOf(10000));
 
-                    return message;
-                }
+                return message;
             });
             //打印日志
             log.info("死信队列实战-发送对象类型的消息入死信队列-内容为：{} ", info);
