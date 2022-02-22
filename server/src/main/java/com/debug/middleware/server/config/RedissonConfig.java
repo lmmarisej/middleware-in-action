@@ -13,8 +13,6 @@ import org.springframework.core.env.Environment;
 /**
  * Redisson相关开源组件自定义注入
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/4/27 13:34
  * @author lmmarise.j
  * @version $Id: $Id
  */

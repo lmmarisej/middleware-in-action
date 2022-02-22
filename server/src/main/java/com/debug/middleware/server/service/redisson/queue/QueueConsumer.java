@@ -1,6 +1,4 @@
-package com.debug.middleware.server.service.redisson.queue;/**
- * Created by Administrator on 2019/5/2.
- */
+package com.debug.middleware.server.service.redisson.queue;
 
 import org.assertj.core.util.Strings;
 import org.redisson.api.RQueue;
@@ -16,8 +14,6 @@ import org.springframework.stereotype.Component;
 /**
  * 队列的消费者
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/5/2 10:10
  * @author lmmarise.j
  * @version $Id: $Id
  */
@@ -30,8 +26,6 @@ public class QueueConsumer implements ApplicationRunner, Ordered {
     private RedissonClient redissonClient;
 
     /**
-     * {@inheritDoc}
-     *
      * 在项目运行启动成功之后执行该run方法
      */
     @Override
@@ -46,7 +40,6 @@ public class QueueConsumer implements ApplicationRunner, Ordered {
                 String msg = rQueue.poll();
                 if (!Strings.isNullOrEmpty(msg)) {
                     log.info("队列的消费者-监听消费消息：{} ", msg);
-                    //TODO:在这里执行相应的业务逻辑
                 }
             }
         });
@@ -57,7 +50,6 @@ public class QueueConsumer implements ApplicationRunner, Ordered {
     /*
     表示QueueConsumer将会在项目启动之后而跟随启动
      */
-    /** {@inheritDoc} */
     @Override
     public int getOrder() {
         return -1;

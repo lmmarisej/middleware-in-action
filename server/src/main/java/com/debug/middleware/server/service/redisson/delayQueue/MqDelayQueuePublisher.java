@@ -1,6 +1,4 @@
-package com.debug.middleware.server.service.redisson.delayQueue;/**
- * Created by Administrator on 2019/5/2.
- */
+package com.debug.middleware.server.service.redisson.delayQueue;
 
 import com.debug.middleware.server.dto.DeadDto;
 import org.slf4j.Logger;
@@ -17,8 +15,6 @@ import org.springframework.stereotype.Component;
 /**
  * RabbitMQ死信队列消息模型-生产者
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/5/2 17:10
  * @author lmmarise.j
  * @version $Id: $Id
  */

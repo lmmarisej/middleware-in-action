@@ -80,7 +80,7 @@ public class RedissonTest {
         BloomDto dto4 = new BloomDto(1000, "1000");
         BloomDto dto5 = new BloomDto(10000, "10000");
         //往布隆过滤器添加对象
-        bloomFilter.add(dto1);
+        bloomFilter.add(dto1);      // 优点：不会开辟内存空间来存储
         bloomFilter.add(dto2);
         bloomFilter.add(dto3);
         bloomFilter.add(dto4);
@@ -98,7 +98,7 @@ public class RedissonTest {
     private UserLoginPublisher userLoginPublisher;
 
     @Test
-    public void test4() throws Exception {
+    public void test4() {
         UserLoginDto dto = new UserLoginDto();
         dto.setUserId(90001);
         dto.setUserName("a-xiu-luo");
@@ -109,11 +109,9 @@ public class RedissonTest {
 
     /**
      * 功能组件Map-RMap
-     *
-     * @throws Exception
      */
     @Test
-    public void test5() throws Exception {
+    public void test5() {
         //定义存储于缓存中间件Redis的Key
         final String key = "myRedissonRMap";
         //构造对象实例
@@ -128,18 +126,12 @@ public class RedissonTest {
 
         //获取映射RMap功能组件实例，并采用多种不同的方式将对象实例添加进映射RMap中
         RMap<Integer, RMapDto> rMap = redissonClient.getMap(key);
-        //正常的添加元素
-        rMap.put(dto1.getId(), dto1);
-        //异步的方式添加元素
-        rMap.putAsync(dto2.getId(), dto2);
-        //添加元素之前判断是否存在,如果不存在才添加元素;否则不添加
-        rMap.putIfAbsent(dto3.getId(), dto3);
-        //添加元素之前判断是否存在,如果不存在才添加元素;否则不添加 - 异步的方式
-        rMap.putIfAbsentAsync(dto4.getId(), dto4);
-        //正常的添加元素-快速的方式
-        rMap.fastPut(dto5.getId(), dto5);
-        //正常的添加元素-快速异步的方式
-        rMap.fastPutAsync(dto6.getId(), dto6);
+        rMap.put(dto1.getId(), dto1);           //正常的添加元素
+        rMap.putAsync(dto2.getId(), dto2);      //异步的方式添加元素
+        rMap.putIfAbsent(dto3.getId(), dto3);   //添加元素之前判断是否存在,如果不存在才添加元素;否则不添加
+        rMap.putIfAbsentAsync(dto4.getId(), dto4);  //添加元素之前判断是否存在,如果不存在才添加元素;否则不添加 - 异步的方式
+        rMap.fastPut(dto5.getId(), dto5);       //正常的添加元素-快速的方式
+        rMap.fastPutAsync(dto6.getId(), dto6);  //正常的添加元素-快速异步的方式
         //添加元素之前判断是否存在,如果不存在才添加元素;否则不添加-异步的方式
         rMap.fastPutIfAbsent(dto7.getId(), dto7);
         //添加元素之前判断是否存在,如果不存在才添加元素;否则不添加 - 异步快速的方式
@@ -175,14 +167,11 @@ public class RedissonTest {
     }
     /**
      * 功能组件Map-RMap
-     * @throws Exception
      */
 
 
     /**
      * 元素淘汰机制 + 本地缓存机制
-     *
-     * @throws Exception
      */
     @Test
     public void test7() throws Exception {
@@ -190,17 +179,13 @@ public class RedissonTest {
         final String key = "myRedissonMapCache";
         //获取映射缓存RMapCache功能组件实例
         RMapCache<Integer, RMapDto> rMap = redissonClient.getMapCache(key);
-
         //本地缓存-功能组件的获取方法
         //RLocalCachedMap<Integer,RMapDto> rMap=redisson.getLocalCachedMap(key, LocalCachedMapOptions.defaults());
-
         //构造对象实例
         RMapDto dto1 = new RMapDto(1, "map1");
         RMapDto dto2 = new RMapDto(2, "map2");
         RMapDto dto3 = new RMapDto(3, "map3");
         RMapDto dto4 = new RMapDto(4, "map4");
-
-
         //将对象元素添加进MapCache组件中
         rMap.putIfAbsent(dto1.getId(), dto1);
         //将对象元素添加进MapCache组件中-有效时间 ttl 设置为 10秒钟
@@ -209,18 +194,15 @@ public class RedissonTest {
         rMap.putIfAbsent(dto3.getId(), dto3);
         //将对象元素添加进MapCache组件中-有效时间 ttl 设置为 5秒钟
         rMap.putIfAbsent(dto4.getId(), dto4, 5, TimeUnit.SECONDS);
-
         //获取MapCache组件的所有Key
         Set<Integer> set = rMap.keySet();
         //获取MapCache组件存储的所有元素
         Map<Integer, RMapDto> resMap = rMap.getAll(set);
         log.info("元素列表：{} ", resMap);
-
         //等待5秒钟-MapCache存储的数据元素列表
         Thread.sleep(5000);
         resMap = rMap.getAll(rMap.keySet());
         log.info("等待5秒钟-元素列表：{} ", resMap);
-
         //等待10秒钟-MapCache存储的数据元素列表
         Thread.sleep(10000);
         resMap = rMap.getAll(rMap.keySet());
@@ -229,10 +211,7 @@ public class RedissonTest {
 
     /**
      * 集合Set-保证元素的唯一性 -RSortedSet
-     *
-     * @throws Exception
      */
-
     @Test
     public void test8() throws Exception {
         //定义存储于缓存中间件Redis的Key
@@ -259,16 +238,13 @@ public class RedissonTest {
         //查看此时有序集合Set的元素列表
         Collection<RSetDto> result = rSortedSet.readAll();
         log.info("此时有序集合Set的元素列表：{} ", result);
-
     }
 
     /**
      * 集合Set-保证元素的唯一性 -ScoredSortedSet
-     *
-     * @throws Exception
      */
     @Test
-    public void test9() throws Exception {
+    public void test9() {
         //定义存储于缓存中间件Redis的Key
         final String key = "myRedissonScoredSortedSet";
         //创建对象实例
@@ -311,11 +287,8 @@ public class RedissonTest {
     @Autowired
     private MqDelayQueuePublisher mqDelayQueuePublisher;
 
-    /**
-     * @throws Exception
-     */
     @Test
-    public void test10() throws Exception {
+    public void test10() {
         log.info("首次的结果： ");
 
         /*final String key="testSortedSetKey1";

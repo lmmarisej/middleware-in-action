@@ -10,9 +10,6 @@ import java.io.Serializable;
 
 /**
  * 用于布隆过滤器存储的对象
- *
- * @Author:debug (SteadyJack)
- * @Date: 2019/4/28 20:41
  **/
 @Data
 @ToString

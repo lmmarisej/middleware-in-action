@@ -1,6 +1,4 @@
-package com.debug.middleware.server.dto;/**
- * Created by Administrator on 2019/5/2.
- */
+package com.debug.middleware.server.dto;
 
 import lombok.Data;
 import lombok.ToString;

@@ -1,6 +1,4 @@
-package com.debug.middleware.server.service.redisson.delayQueue;/**
- * Created by Administrator on 2019/5/2.
- */
+package com.debug.middleware.server.service.redisson.delayQueue;
 
 import com.debug.middleware.server.dto.DeadDto;
 import org.slf4j.Logger;

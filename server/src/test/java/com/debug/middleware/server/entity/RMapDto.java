@@ -8,9 +8,6 @@ import java.io.Serializable;
 
 /**
  * 映射数据结构RMap的实体信息
- *
- * @author: zhonglinsen
- * @date: 2019/4/29
  */
 @Data
 @ToString

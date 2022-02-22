@@ -19,8 +19,6 @@ import java.util.concurrent.TimeUnit;
 /**
  * 博客点赞处理服务
  *
- * @author: zhonglinsen
- * @date: 2019/1/15
  * @author lmmarise.j
  * @version $Id: $Id
  */
@@ -35,18 +33,16 @@ public class RedisPraise implements IRedisPraise {
     private RedissonClient redissonClient;
 
     /**
-     * {@inheritDoc}
-     *
      * 缓存当前用户点赞博客的记录
      */
     @Override
     public void cachePraiseBlog(Integer blogId, Integer uId, Integer status) throws Exception {
         //创建用于获取分布式锁的Key
-        final String lockName = new StringBuffer("blogRedissonPraiseLock").append(blogId).append(uId).append(status).toString();
+        final String lockName = "blogRedissonPraiseLock" + blogId + uId + status;
         //获取分布式锁实例
         RLock rLock = redissonClient.getLock(lockName);
         //尝试获取分布式锁（可重入锁）
-        Boolean res = rLock.tryLock(100, 10, TimeUnit.SECONDS);
+        boolean res = rLock.tryLock(100, 10, TimeUnit.SECONDS);
         try {
             //res为true代表已经获取到了锁
             if (res) {
@@ -67,44 +63,33 @@ public class RedisPraise implements IRedisPraise {
                     }
                 }
             }
-        } catch (Exception e) {
-            throw e;
         } finally {
             //操作完毕，直接释放该锁
-            if (rLock != null) {
-                rLock.forceUnlock();
-            }
+            rLock.forceUnlock();
         }
     }
 
     /**
-     * {@inheritDoc}
-     *
      * 获取博客总的点赞数
+     *
+     * 这种方法，恕我直言,好憨，应该设计为：博客id:(用户id:用户id)，统计点赞数，直接count(用户id:用户id)得出
      */
     @Override
-    public Long getCacheTotalBlog(Integer blogId) throws Exception {
-        //定义最终的返回值，初始时为0
-        Long result = 0L;
-        //判断参数的合法性
+    public Long getCacheTotalBlog(Integer blogId) {
+        long result = 0L;
         if (blogId != null) {
-            //定义Redisson的RMap映射数据结构实例
-            RMap<String, Integer> praiseMap = redissonClient.getMap(keyBlog);
-            //获取RMap中所有的key-value，即键值对列表-map
-            Map<String, Integer> dataMap = praiseMap.readAllMap();
-            //判断取出来的键值对列表是否有值
-            if (dataMap != null && dataMap.keySet() != null) {
-                //获取该map所有的 键  列表 - 每个 键 的取值是由 “博客id:用户id” 这样的格式构成
-                Set<String> set = dataMap.keySet();
-                Integer bId;
-                //循环遍历其中所有的 键 列表，查看是否有以当前博客id开头的数据记录
-                for (String key : set) {
+            RMap<String, Integer> praiseMap = redissonClient.getMap(keyBlog);   //定义Redisson的RMap映射数据结构实例
+            Map<String, Integer> dataMap = praiseMap.readAllMap();      //获取RMap中所有的key-value，即键值对列表-map
+            if (dataMap != null) {
+                Set<String> set = dataMap.keySet(); //获取该map所有的 键  列表 - 每个 键 的取值是由 “博客id:用户id” 这样的格式构成
+                int bId;
+                for (String key : set) {        //循环遍历其中所有的 键 列表，查看是否有以当前博客id开头的数据记录
                     if (!Strings.isNullOrEmpty(key)) {
                         //由于 每个 键 的取值是由 “博客id:用户id” 这样的格式构成;
-                        //故而可以通过分隔 分隔符 得到：博客id 跟 用户id参数的值
+                        //故而可以通过分隔 \隔符 得到：博客id 跟 用户id参数的值
                         String[] arr = key.split(":");
-                        if (arr != null && arr.length > 0) {
-                            bId = Integer.valueOf(arr[0]);
+                        if (arr.length > 0) {
+                            bId = Integer.parseInt(arr[0]);
                             //判断当前取出的 键 对应的 博客id 是否跟当前待比较的 博客id 相等，
                             //如果是，代表有一条点赞记录，则结果需要加1
                             if (blogId.equals(bId)) {
@@ -125,8 +110,6 @@ public class RedisPraise implements IRedisPraise {
     private PraiseMapper praiseMapper;
 
     /**
-     * {@inheritDoc}
-     *
      * 博客点赞总数排行榜
      */
     @Override

@@ -43,29 +43,16 @@ public class UserRegService {
 
     /**
      * 处理用户提交注册的请求-不加分布式锁
-     *
-     * @param dto a {@link com.debug.middleware.server.controller.lock.dto.UserRegDto} object.
-     * @throws java.lang.Exception if any.
      */
     public void userRegNoLock(UserRegDto dto) throws Exception {
-        //根据用户名查询用户实体信息
-        UserReg reg = userRegMapper.selectByUserName(dto.getUserName());
-        //如果当前用户名还未被注册，则将当前用户信息注册入数据库中
+        UserReg reg = userRegMapper.selectByUserName(dto.getUserName());        //根据用户名查询用户实体信息
         if (reg == null) {
             log.info("---不加分布式锁---,当前用户名为：{} ", dto.getUserName());
-
-            //创建用户注册实体信息
             UserReg entity = new UserReg();
-            //将提交的用户注册请求实体信息中对应的字段取值
-            //复制到新创建的用户注册实体的相应字段中
             BeanUtils.copyProperties(dto, entity);
-            //设置注册时间
             entity.setCreateTime(new Date());
-            //插入用户注册信息
             userRegMapper.insertSelective(entity);
-
         } else {
-            //如果用户名已被注册，则抛出异常
             throw new Exception("用户信息已经存在!");
         }
     }
@@ -73,51 +60,27 @@ public class UserRegService {
 
     /**
      * 处理用户提交注册的请求-加分布式锁
-     *
-     * @param dto a {@link com.debug.middleware.server.controller.lock.dto.UserRegDto} object.
-     * @throws java.lang.Exception if any.
      */
     public void userRegWithLock(UserRegDto dto) throws Exception {
-        //精心设计并构造SETNX操作中的Key-一定要跟实际的业务或共享资源挂钩
-        final String key = dto.getUserName() + "-lock";
-        //设计Key对应的Value
-        //为了具有随机性，在这里采用系统提供的纳秒级别的时间戳 + UUID生成的随机数作为Value
+        final String key = dto.getUserName() + "-lock";             //精心设计并构造SETNX操作中的Key
         final String value = System.nanoTime() + "" + UUID.randomUUID();
-        //获取操作Key的ValueOperations实例
         ValueOperations valueOperations = stringRedisTemplate.opsForValue();
-        //调用SETNX操作获取锁，如果返回true，则获取锁成功
-        //代表当前的共享资源还没被其他线程所占用
-        Boolean res = valueOperations.setIfAbsent(key, value);
-        //返回true，即代表获取到分布式锁
+        Boolean res = valueOperations.setIfAbsent(key, value);      //调用SETNX操作获取锁，如果返回true，则获取锁成功
         if (res) {
-            //为了防止出现死锁的状况，加上EXPIRE操作，即Key的过期时间,在这里设置为20s
-            //具体应根据实际情况而定
-            stringRedisTemplate.expire(key, 20L, TimeUnit.SECONDS);
+            stringRedisTemplate.expire(key, 20L, TimeUnit.SECONDS);     //为了防止出现死锁的状况，加上EXPIRE操作，即Key的过期时间,在这里设置为20s
             try {
-                //根据用户名查询用户实体信息
                 UserReg reg = userRegMapper.selectByUserName(dto.getUserName());
-                //如果当前用户名还未被注册，则将当前用户信息注册入数据库中
                 if (reg == null) {
                     log.info("---加了分布式锁---,当前用户名为：{} ", dto.getUserName());
-                    //创建用户注册实体信息
-                    UserReg entity = new UserReg();
-                    //将提交的用户注册请求实体信息中对应的字段取值
-                    //复制到新创建的用户注册实体的相应字段中
-                    BeanUtils.copyProperties(dto, entity);
-                    //设置注册时间
-                    entity.setCreateTime(new Date());
-                    //插入用户注册信息
-                    userRegMapper.insertSelective(entity);
-
+                    UserReg entity = new UserReg();         // 创建用户注册实体信息
+                    BeanUtils.copyProperties(dto, entity);  // 将提交的用户注册请求实体信息中对应的字段取值 复制到新创建的用户注册实体的相应字段中
+                    entity.setCreateTime(new Date());       // 设置注册时间
+                    userRegMapper.insertSelective(entity);  // 插入用户注册信息
                 } else {
-                    //如果用户名已被注册，则抛出异常
-                    throw new Exception("用户信息已经存在!");
+                    throw new Exception("用户信息已经存在!");   //如果用户名已被注册，则抛出异常
                 }
-            } catch (Exception e) {
-                throw e;
             } finally {
-                //不管发生任何情况，都需要在redis加锁成功并访问操作完共享资源后释放锁
-                if (value.equals(valueOperations.get(key).toString())) {
+                if (value.equals(valueOperations.get(key).toString())) {    //不管发生任何情况，都需要在redis加锁成功并访问操作完共享资源后释放锁
                     stringRedisTemplate.delete(key);
                 }
             }
@@ -134,9 +97,6 @@ public class UserRegService {
 
     /**
      * 处理用户提交注册的请求-加ZooKeeper分布式锁
-     *
-     * @param dto a {@link com.debug.middleware.server.controller.lock.dto.UserRegDto} object.
-     * @throws java.lang.Exception if any.
      */
     public void userRegWithZKLock(UserRegDto dto) throws Exception {
         //创建ZooKeeper互斥锁组件实例，需要将监控用的客户端实例、精心构造的共享资源 作为构造参数
@@ -145,8 +105,6 @@ public class UserRegService {
             //采用互斥锁组件尝试获取分布式锁-其中尝试的最大时间在这里设置为10s
             //当然,具体的情况需要根据实际的业务而定
             if (mutex.acquire(10L, TimeUnit.SECONDS)) {
-                //TODO：真正的核心处理逻辑
-
                 //根据用户名查询用户实体信息
                 UserReg reg = userRegMapper.selectByUserName(dto.getUserName());
                 //如果当前用户名还未被注册，则将当前用户信息注册入数据库中
@@ -161,7 +119,6 @@ public class UserRegService {
                     entity.setCreateTime(new Date());
                     //插入用户注册信息
                     userRegMapper.insertSelective(entity);
-
                 } else {
                     //如果用户名已被注册，则抛出异常
                     throw new Exception("用户信息已经存在!");
@@ -169,10 +126,7 @@ public class UserRegService {
             } else {
                 throw new RuntimeException("获取ZooKeeper分布式锁失败!");
             }
-        } catch (Exception e) {
-            throw e;
         } finally {
-            //TODO：不管发生何种情况，在处理完核心业务逻辑之后，需要释放该分布式锁
             mutex.release();
         }
     }
@@ -199,8 +153,6 @@ public class UserRegService {
             //即上锁之后，不管何种状况，10s后会自动释放
             lock.lock(10, TimeUnit.SECONDS);
 
-            //TODO：真正的核心处理逻辑
-
             //根据用户名查询用户实体信息
             UserReg reg = userRegMapper.selectByUserName(dto.getUserName());
             //如果当前用户名还未被注册，则将当前用户信息注册入数据库中
@@ -223,7 +175,6 @@ public class UserRegService {
             log.error("---获取Redisson的分布式锁失败!---");
             throw e;
         } finally {
-            //TODO：不管发生何种情况，在处理完核心业务逻辑之后，需要释放该分布式锁
             if (lock != null) {
                 lock.unlock();
 

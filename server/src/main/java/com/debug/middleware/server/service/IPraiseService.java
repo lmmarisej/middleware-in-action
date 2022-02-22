@@ -8,36 +8,17 @@ import java.util.Collection;
 /**
  * 点赞业务处理接口
  *
- * @author: zhonglinsen
  * @author lmmarise.j
  * @version $Id: $Id
  */
 public interface IPraiseService {
     //点赞博客-无锁
-    /**
-     * <p>addPraise.</p>
-     *
-     * @param dto a {@link com.debug.middleware.server.dto.PraiseDto} object.
-     * @throws java.lang.Exception if any.
-     */
     void addPraise(PraiseDto dto) throws Exception;
 
     //点赞博客-加分布式锁
-    /**
-     * <p>addPraiseLock.</p>
-     *
-     * @param dto a {@link com.debug.middleware.server.dto.PraiseDto} object.
-     * @throws java.lang.Exception if any.
-     */
     void addPraiseLock(PraiseDto dto) throws Exception;
 
     //取消点赞博客
-    /**
-     * <p>cancelPraise.</p>
-     *
-     * @param dto a {@link com.debug.middleware.server.dto.PraiseDto} object.
-     * @throws java.lang.Exception if any.
-     */
     void cancelPraise(PraiseDto dto) throws Exception;
 
     //获取博客的点赞数

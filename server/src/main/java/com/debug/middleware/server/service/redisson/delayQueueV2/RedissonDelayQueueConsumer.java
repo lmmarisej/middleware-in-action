@@ -1,6 +1,4 @@
-package com.debug.middleware.server.service.redisson.delayQueueV2;/**
- * Created by Administrator on 2019/5/2.
- */
+package com.debug.middleware.server.service.redisson.delayQueueV2;
 
 import com.debug.middleware.server.dto.DeadDto;
 import org.redisson.api.RBlockingQueue;

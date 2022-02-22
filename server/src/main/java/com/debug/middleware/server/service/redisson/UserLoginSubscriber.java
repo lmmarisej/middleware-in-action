@@ -18,8 +18,6 @@ import org.springframework.stereotype.Component;
 /**
  * 记录用户登录成功后的轨迹-消费者
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/4/28 22:08
  * @author lmmarise.j
  * @version $Id: $Id
  */
@@ -37,24 +35,16 @@ public class UserLoginSubscriber implements ApplicationRunner, Ordered {
     private SysLogService sysLogService;
 
     /**
-     * {@inheritDoc}
-     *
      * 在这个方法里实现“不断地监听该主题中消息的动态” - 即间接地实现自动监听消费
      */
     @Override
     public void run(ApplicationArguments arguments) throws Exception {
         try {
             RTopic rTopic = redissonClient.getTopic(topicKey);
-            rTopic.addListener(UserLoginDto.class, new MessageListener<UserLoginDto>() {
-                @Override
-                public void onMessage(CharSequence charSequence, UserLoginDto dto) {
-                    log.info("记录用户登录成功后的轨迹-消费者-监听消费到消息：{} ", dto);
-
-                    //判断消息是否为null
-                    if (dto != null) {
-                        //如果消息不为null,则将消息记录入数据库中
-                        sysLogService.recordLog(dto);
-                    }
+            rTopic.addListener(UserLoginDto.class, (charSequence, dto) -> {
+                log.info("记录用户登录成功后的轨迹-消费者-监听消费到消息：{} ", dto);
+                if (dto != null) {
+                    sysLogService.recordLog(dto);       // 如果消息不为null，则将消息记录入数据库中
                 }
             });
         } catch (Exception e) {
@@ -63,8 +53,6 @@ public class UserLoginSubscriber implements ApplicationRunner, Ordered {
     }
 
     /**
-     * {@inheritDoc}
-     *
      * 设置项目启动时也跟着启动
      */
     @Override
@@ -72,21 +60,3 @@ public class UserLoginSubscriber implements ApplicationRunner, Ordered {
         return 1;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

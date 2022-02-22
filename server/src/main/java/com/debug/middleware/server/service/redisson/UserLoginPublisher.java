@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 /**
  * 记录用户登录成功后的轨迹-生产者
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/4/28 22:07
  * @author lmmarise.j
  * @version $Id: $Id
  */

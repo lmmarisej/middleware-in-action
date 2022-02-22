@@ -1,6 +1,4 @@
-package com.debug.middleware.server.service.redisson.delayQueueV2;/**
- * Created by Administrator on 2019/5/2.
- */
+package com.debug.middleware.server.service.redisson.delayQueueV2;
 
 import com.debug.middleware.server.dto.DeadDto;
 import org.redisson.api.*;
@@ -14,8 +12,6 @@ import java.util.concurrent.TimeUnit;
 /**
  * Redisson延迟队列消息模型-生产者
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/5/2 17:10
  * @author lmmarise.j
  * @version $Id: $Id
  */
@@ -43,7 +39,6 @@ public class RedissonDelayQueuePublisher {
             RDelayedQueue<DeadDto> rDelayedQueue = redissonClient.getDelayedQueue(rBlockingQueue);
             //往延迟队列发送消息-设置的TTL，相当于延迟了“阻塞队列”中消息的接收
             rDelayedQueue.offer(msg, ttl, TimeUnit.MILLISECONDS);
-
             log.info("Redisson延迟队列消息模型-生产者-发送消息入延迟队列-消息：{}", msg);
         } catch (Exception e) {
             log.error("Redisson延迟队列消息模型-生产者-发送消息入延迟队列-发生异常：{}", msg, e.fillInStackTrace());

@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 用户注册请求Controller
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/4/20 20:23
  * @author lmmarise.j
  * @version $Id: $Id
  */
@@ -35,9 +33,6 @@ public class UserRegController {
 
     /**
      * 提交用户注册信息
-     *
-     * @param dto a {@link com.debug.middleware.server.controller.lock.dto.UserRegDto} object.
-     * @return a {@link com.debug.middleware.api.response.BaseResponse} object.
      */
     @RequestMapping(value = prefix + "/submit", method = RequestMethod.GET)
     public BaseResponse reg(UserRegDto dto) {

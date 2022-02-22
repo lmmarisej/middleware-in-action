@@ -1,6 +1,4 @@
-package com.debug.middleware.server.service.redisson.queue;/**
- * Created by Administrator on 2019/5/2.
- */
+package com.debug.middleware.server.service.redisson.queue;
 
 import org.redisson.api.RQueue;
 import org.redisson.api.RedissonClient;
@@ -12,8 +10,6 @@ import org.springframework.stereotype.Component;
 /**
  * 队列的生产者
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/5/2 10:10
  * @author lmmarise.j
  * @version $Id: $Id
  */

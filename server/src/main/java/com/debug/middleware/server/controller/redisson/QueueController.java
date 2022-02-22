@@ -1,6 +1,4 @@
-package com.debug.middleware.server.controller.redisson;/**
- * Created by Administrator on 2019/5/2.
- */
+package com.debug.middleware.server.controller.redisson;
 
 import com.debug.middleware.api.enums.StatusCode;
 import com.debug.middleware.api.response.BaseResponse;
@@ -19,8 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Redisson的队列Controller
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/5/2 11:01
  * @author lmmarise.j
  * @version $Id: $Id
  */
@@ -36,9 +32,6 @@ public class QueueController {
 
     /**
      * 发送消息
-     *
-     * @param msg a {@link java.lang.String} object.
-     * @return a {@link com.debug.middleware.api.response.BaseResponse} object.
      */
     @RequestMapping(value = prefix + "/basic/msg/send", method = RequestMethod.GET)
     public BaseResponse sendBasicMsg(@RequestParam String msg) {
@@ -56,8 +49,6 @@ public class QueueController {
 
     /**
      * 发送mq延迟消息
-     *
-     * @return a {@link com.debug.middleware.api.response.BaseResponse} object.
      */
     @RequestMapping(value = prefix + "/basic/msg/delay/send", method = RequestMethod.GET)
     public BaseResponse sendMqDelayMsg() {
@@ -84,8 +75,6 @@ public class QueueController {
 
     /**
      * 发送redisson延迟消息
-     *
-     * @return a {@link com.debug.middleware.api.response.BaseResponse} object.
      */
     @RequestMapping(value = prefix + "/redisson/msg/delay/send", method = RequestMethod.GET)
     public BaseResponse sendRedissonDelayMsg() {
