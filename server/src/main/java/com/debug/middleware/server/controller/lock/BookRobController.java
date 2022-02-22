@@ -1,6 +1,4 @@
-package com.debug.middleware.server.controller.lock;/**
- * Created by Administrator on 2019/4/17.
- */
+package com.debug.middleware.server.controller.lock;
 
 import com.debug.middleware.api.enums.StatusCode;
 import com.debug.middleware.api.response.BaseResponse;

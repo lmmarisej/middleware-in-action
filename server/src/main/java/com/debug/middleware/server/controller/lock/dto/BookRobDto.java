@@ -1,6 +1,4 @@
-package com.debug.middleware.server.controller.lock.dto;/**
- * Created by Administrator on 2019/4/17.
- */
+package com.debug.middleware.server.controller.lock.dto;
 
 import lombok.Data;
 import lombok.ToString;

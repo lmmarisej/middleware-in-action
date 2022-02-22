@@ -1,6 +1,4 @@
-package com.debug.middleware.server.controller.lock.dto;/**
- * Created by Administrator on 2019/4/17.
- */
+package com.debug.middleware.server.controller.lock.dto;
 
 import lombok.Data;
 import lombok.ToString;
@@ -10,8 +8,6 @@ import java.io.Serializable;
 /**
  * 用户账户提现申请dto
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/4/17 20:32
  * @author lmmarise.j
  * @version $Id: $Id
  */

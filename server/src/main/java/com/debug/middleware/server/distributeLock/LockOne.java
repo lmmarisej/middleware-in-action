@@ -1,6 +1,4 @@
-package com.debug.middleware.server.distributeLock;/**
- * Created by Administrator on 2019/4/14.
- */
+package com.debug.middleware.server.distributeLock;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,19 +6,12 @@ import org.slf4j.LoggerFactory;
 /**
  * 锁机制
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/4/14 17:16
  * @author lmmarise.j
  * @version $Id: $Id
  */
 public class LockOne {
     private static final Logger log = LoggerFactory.getLogger(LockOne.class);
 
-    /**
-     * <p>main.</p>
-     *
-     * @param args an array of {@link java.lang.String} objects.
-     */
     public static void main(String args[]) {
         Thread tAdd = new Thread(new LockThread(100));
         Thread tSub = new Thread(new LockThread(-100));
@@ -30,11 +21,6 @@ public class LockOne {
 }
 
 //模拟锁机制的线程类
-/**
- * <p>Constructor for LockThread.</p>
- *
- * @param count a int.
- */
 class LockThread implements Runnable {
     private static final Logger log = LoggerFactory.getLogger(LockThread.class);
 
@@ -75,7 +61,7 @@ class LockThread implements Runnable {
         //执行10次访问共享的操作
         for (int i = 0; i < 100; i++) {
             //加入 synchronized 关键字,控制并发线程对共享资源的访问
-            synchronized (SysConstant.amount) {
+            synchronized (SysConstant.class) {
                 //通过传进来的金额(可正、可负)进行叠加
                 SysConstant.amount = SysConstant.amount + count;
                 //打印每次操作完账户的余额

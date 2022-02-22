@@ -1,6 +1,4 @@
-package com.debug.middleware.server.service.lock;/**
- * Created by Administrator on 2019/4/17.
- */
+package com.debug.middleware.server.service.lock;
 
 import com.debug.middleware.model.entity.UserAccount;
 import com.debug.middleware.model.entity.UserAccountRecord;
@@ -18,8 +16,6 @@ import java.util.Date;
 /**
  * 基于数据库级别的乐观、悲观锁服务
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/4/17 20:36
  * @author lmmarise.j
  * @version $Id: $Id
  */
@@ -36,9 +32,6 @@ public class DataBaseLockService {
 
     /**
      * 用户账户提取金额处理
-     *
-     * @param dto a {@link com.debug.middleware.server.controller.lock.dto.UserAccountDto} object.
-     * @throws java.lang.Exception if any.
      */
     public void takeMoney(UserAccountDto dto) throws Exception {
         //查询用户账户实体记录
@@ -67,13 +60,10 @@ public class DataBaseLockService {
 
     /**
      * 乐观锁处理方式
-     *
-     * @param dto a {@link com.debug.middleware.server.controller.lock.dto.UserAccountDto} object.
-     * @throws java.lang.Exception if any.
      */
-    public void takeMoneyWithLock(UserAccountDto dto) throws Exception {
+    public void takeMoneyWithOptimisticLock(UserAccountDto dto) throws Exception {
         //查询用户账户实体记录
-        UserAccount userAccount = userAccountMapper.selectByUserId(dto.getUserId());
+        UserAccount userAccount = userAccountMapper.selectByUserId(dto.getUserId());        // 包含了本次操作的版本号
         //判断实体记录是否存在 以及 账户余额是否足够被提现
         if (userAccount != null && userAccount.getAmount().doubleValue() - dto.getAmount() > 0) {
             //如果足够被提现，则更新现有的账户余额 - 采用version版本号机制
@@ -92,18 +82,17 @@ public class DataBaseLockService {
                 userAccountRecordMapper.insert(record);
                 //打印日志
                 log.info("当前待提现的金额为：{} 用户账户余额为：{}", dto.getAmount(), userAccount.getAmount());
+            } else {
+                throw new Exception("操作失败，请重试。");
             }
         } else {
-            throw new Exception("账户不存在或账户余额不足!");
+            throw new Exception("账户不存在或账户余额不足。");
         }
     }
 
 
     /**
      * 悲观锁处理方式
-     *
-     * @param dto a {@link com.debug.middleware.server.controller.lock.dto.UserAccountDto} object.
-     * @throws java.lang.Exception if any.
      */
     public void takeMoneyWithLockNegative(UserAccountDto dto) throws Exception {
         //查询用户账户实体记录 - for update的方式

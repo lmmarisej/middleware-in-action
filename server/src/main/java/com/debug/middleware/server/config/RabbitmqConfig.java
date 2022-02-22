@@ -440,9 +440,6 @@ public class RabbitmqConfig {
 
     /**
      * 创建单一消费者-确认模式为MANUAL-并指定监听的队列和消费者
-     *
-     * @param manualQueue a {@link org.springframework.amqp.core.Queue} object.
-     * @return a {@link org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer} object.
      */
     @Bean(name = "simpleContainerManual")
     public SimpleMessageListenerContainer simpleContainer(@Qualifier("manualQueue") Queue manualQueue) {
