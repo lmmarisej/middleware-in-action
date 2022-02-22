@@ -10,8 +10,6 @@ import java.io.Serializable;
 /**
  * 用户下单实体信息
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/4/11 19:05
  * @author lmmarise.j
  * @version $Id: $Id
  */

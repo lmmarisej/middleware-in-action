@@ -1,6 +1,4 @@
-package com.debug.middleware.server.service;/**
- * Created by Administrator on 2019/4/11.
- */
+package com.debug.middleware.server.service;
 
 import com.debug.middleware.model.entity.MqOrder;
 import com.debug.middleware.model.entity.UserOrder;
@@ -19,8 +17,6 @@ import java.util.Date;
 /**
  * 用户下单支付超时-处理服务
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/4/11 23:34
  * @author lmmarise.j
  * @version $Id: $Id
  */
@@ -41,11 +37,8 @@ public class DeadUserOrderService {
 
     /**
      * 用户下单 - 并将生成的下单记录Id压入死信队列中等待延迟处理
-     *
-     * @param userOrderDto a {@link com.debug.middleware.server.dto.UserOrderDto} object.
-     * @throws java.lang.Exception if any.
      */
-    public void pushUserOrder(UserOrderDto userOrderDto) throws Exception {
+    public void pushUserOrder(UserOrderDto userOrderDto) {
         //创建用户下单实例
         UserOrder userOrder = new UserOrder();
         //复制userOrderDto对应的字段取值到新的实例对象userOrder中
@@ -67,8 +60,6 @@ public class DeadUserOrderService {
 
     /**
      * 更新用户下单记录的状态
-     *
-     * @param userOrder a {@link com.debug.middleware.model.entity.UserOrder} object.
      */
     public void updateUserOrderRecord(UserOrder userOrder) {
         try {
@@ -90,29 +81,3 @@ public class DeadUserOrderService {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -27,8 +27,6 @@ public class KnowledgeManualConsumer implements ChannelAwareMessageListener {
 
 
     /**
-     * {@inheritDoc}
-     *
      * 监听消费消息
      */
     @Override
@@ -45,7 +43,6 @@ public class KnowledgeManualConsumer implements ChannelAwareMessageListener {
             channel.basicAck(deliveryTag, true);
         } catch (Exception e) {
             log.info("确认消费模式-人为手动确认消费-监听器监听消费消息-发生异常：", e.fillInStackTrace());
-
             //如果在处理消息的过程中发生了异常,则照样需要人为手动确认消费掉该消息
             // (否则该消息将一直留在队列中,从而将导致消息的重复消费)
             channel.basicReject(deliveryTag, false);

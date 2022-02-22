@@ -47,22 +47,18 @@ public class MqDelayQueuePublisher {
             rabbitTemplate.setExchange(env.getProperty("mq.redisson.dead.basic.exchange.name"));
             rabbitTemplate.setRoutingKey(env.getProperty("mq.redisson.dead.basic.routing.key.name"));
             //调用RabbitMQ操作组件发送消息的方法
-            rabbitTemplate.convertAndSend(msg, new MessagePostProcessor() {
-                @Override
-                public Message postProcessMessage(Message message) throws AmqpException {
-                    //获取消息属性实例
-                    MessageProperties messageProperties = message.getMessageProperties();
-                    //设置消息的持久化
-                    messageProperties.setDeliveryMode(MessageDeliveryMode.PERSISTENT);
-                    //指定消息头中消息的具体类型
-                    messageProperties.setHeader(AbstractJavaTypeMapper.DEFAULT_CONTENT_CLASSID_FIELD_NAME, DeadDto.class);
-                    //设置消息的过期时间
-                    messageProperties.setExpiration(ttl.toString());
-                    //返回消息实例
-                    return message;
-                }
+            rabbitTemplate.convertAndSend(msg, message -> {
+                //获取消息属性实例
+                MessageProperties messageProperties = message.getMessageProperties();
+                //设置消息的持久化
+                messageProperties.setDeliveryMode(MessageDeliveryMode.PERSISTENT);
+                //指定消息头中消息的具体类型
+                messageProperties.setHeader(AbstractJavaTypeMapper.DEFAULT_CONTENT_CLASSID_FIELD_NAME, DeadDto.class);
+                //设置消息的过期时间
+                messageProperties.setExpiration(ttl.toString());
+                //返回消息实例
+                return message;
             });
-
             log.info("RabbitMQ死信队列消息模型-生产者-发送消息入延迟队列-消息：{}", msg);
         } catch (Exception e) {
             log.error("RabbitMQ死信队列消息模型-生产者-发送消息入延迟队列-发生异常：{}", msg, e.fillInStackTrace());

@@ -542,33 +542,18 @@ public class RabbitmqConfig {
     }
 
     //创建真正队列 - 面向消费者
-    /**
-     * <p>realConsumerQueue.</p>
-     *
-     * @return a {@link org.springframework.amqp.core.Queue} object.
-     */
     @Bean
     public Queue realConsumerQueue() {
         return new Queue(env.getProperty("mq.consumer.real.queue.name"), true);
     }
 
     //创建死信交换机
-    /**
-     * <p>basicDeadExchange.</p>
-     *
-     * @return a {@link org.springframework.amqp.core.TopicExchange} object.
-     */
     @Bean
     public TopicExchange basicDeadExchange() {
         return new TopicExchange(env.getProperty("mq.dead.exchange.name"), true, false);
     }
 
     //创建死信路由及其绑定
-    /**
-     * <p>basicDeadBinding.</p>
-     *
-     * @return a {@link org.springframework.amqp.core.Binding} object.
-     */
     @Bean
     public Binding basicDeadBinding() {
         // 如果交换机接收到的消息的路由key为mq.dead.routing.key.name，就投递到消费者的队列
@@ -578,8 +563,6 @@ public class RabbitmqConfig {
 
     /**
      * 用户下单支付超时-RabbitMQ死信队列消息模型构建
-     *
-     * @return a {@link org.springframework.amqp.core.Queue} object.
      */
 
     //创建死信队列
@@ -588,62 +571,36 @@ public class RabbitmqConfig {
         Map<String, Object> args = new HashMap();
         args.put("x-dead-letter-exchange", env.getProperty("mq.order.dead.exchange.name"));
         args.put("x-dead-letter-routing-key", env.getProperty("mq.order.dead.routing.key.name"));
-
         //设定TTL，单位为ms，在这里为了测试方便，设置为10s，当然实际业务场景可能为1h或者更长
         args.put("x-message-ttl", 10000);
         return new Queue(env.getProperty("mq.order.dead.queue.name"), true, false, false, args);
     }
 
     //创建“基本消息模型”的基本交换机 - 面向生产者
-    /**
-     * <p>orderProducerExchange.</p>
-     *
-     * @return a {@link org.springframework.amqp.core.TopicExchange} object.
-     */
     @Bean
     public TopicExchange orderProducerExchange() {
         return new TopicExchange(env.getProperty("mq.producer.order.exchange.name"), true, false);
     }
 
     //创建“基本消息模型”的基本绑定-基本交换机+基本路由 - 面向生产者
-    /**
-     * <p>orderProducerBinding.</p>
-     *
-     * @return a {@link org.springframework.amqp.core.Binding} object.
-     */
     @Bean
     public Binding orderProducerBinding() {
         return BindingBuilder.bind(orderDeadQueue()).to(orderProducerExchange()).with(env.getProperty("mq.producer.order.routing.key.name"));
     }
 
     //创建真正队列 - 面向消费者
-    /**
-     * <p>realOrderConsumerQueue.</p>
-     *
-     * @return a {@link org.springframework.amqp.core.Queue} object.
-     */
     @Bean
     public Queue realOrderConsumerQueue() {
         return new Queue(env.getProperty("mq.consumer.order.real.queue.name"), true);
     }
 
     //创建死信交换机
-    /**
-     * <p>basicOrderDeadExchange.</p>
-     *
-     * @return a {@link org.springframework.amqp.core.TopicExchange} object.
-     */
     @Bean
     public TopicExchange basicOrderDeadExchange() {
         return new TopicExchange(env.getProperty("mq.order.dead.exchange.name"), true, false);
     }
 
     //创建死信路由及其绑定
-    /**
-     * <p>basicOrderDeadBinding.</p>
-     *
-     * @return a {@link org.springframework.amqp.core.Binding} object.
-     */
     @Bean
     public Binding basicOrderDeadBinding() {
         return BindingBuilder.bind(realOrderConsumerQueue()).to(basicOrderDeadExchange()).with(env.getProperty("mq.order.dead.routing.key.name"));
@@ -652,8 +609,6 @@ public class RabbitmqConfig {
 
     /**
      * Redisson篇章-RabbitMQ死信队列的缺陷
-     *
-     * @return a {@link org.springframework.amqp.core.Queue} object.
      */
 
     //创建死信队列-由死信交换机+死信路由组成
@@ -666,22 +621,12 @@ public class RabbitmqConfig {
     }
 
     //创建基本交换机
-    /**
-     * <p>redissonBasicExchange.</p>
-     *
-     * @return a {@link org.springframework.amqp.core.TopicExchange} object.
-     */
     @Bean
     public TopicExchange redissonBasicExchange() {
         return new TopicExchange(env.getProperty("mq.redisson.dead.basic.exchange.name"), true, false);
     }
 
     //创建基本路由及其绑定-绑定到死信队列
-    /**
-     * <p>redissonBasicBinding.</p>
-     *
-     * @return a {@link org.springframework.amqp.core.Binding} object.
-     */
     @Bean
     public Binding redissonBasicBinding() {
         return BindingBuilder.bind(redissonBasicDeadQueue())
@@ -689,33 +634,18 @@ public class RabbitmqConfig {
     }
 
     //创建死信交换机
-    /**
-     * <p>redissonBasicDeadExchange.</p>
-     *
-     * @return a {@link org.springframework.amqp.core.TopicExchange} object.
-     */
     @Bean
     public TopicExchange redissonBasicDeadExchange() {
         return new TopicExchange(env.getProperty("mq.redisson.dead.exchange.name"), true, false);
     }
 
     //创建真正队列 - 面向消费者
-    /**
-     * <p>redissonBasicDeadRealQueue.</p>
-     *
-     * @return a {@link org.springframework.amqp.core.Queue} object.
-     */
     @Bean
     public Queue redissonBasicDeadRealQueue() {
         return new Queue(env.getProperty("mq.redisson.real.queue.name"), true);
     }
 
     //创建死信路由及其绑定-绑定到真正的队列
-    /**
-     * <p>redissonBasicDeadRealBinding.</p>
-     *
-     * @return a {@link org.springframework.amqp.core.Binding} object.
-     */
     @Bean
     public Binding redissonBasicDeadRealBinding() {
         return BindingBuilder.bind(redissonBasicDeadRealQueue())

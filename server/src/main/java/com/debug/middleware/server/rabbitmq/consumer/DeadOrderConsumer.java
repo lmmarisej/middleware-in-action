@@ -1,6 +1,4 @@
-package com.debug.middleware.server.rabbitmq.consumer;/**
- * Created by Administrator on 2019/4/11.
- */
+package com.debug.middleware.server.rabbitmq.consumer;
 
 import com.debug.middleware.model.entity.UserOrder;
 import com.debug.middleware.model.mapper.UserOrderMapper;
@@ -35,20 +33,15 @@ public class DeadOrderConsumer {
 
     /**
      * 用户下单支付超时消息模型-监听真正队列
-     *
-     * @param orderId a {@link java.lang.Integer} object.
      */
     @RabbitListener(queues = "${mq.consumer.order.real.queue.name}", containerFactory = "singleListenerContainer")
     public void consumeMsg(@Payload Integer orderId) {
         try {
             log.info("用户下单支付超时消息模型-监听真正队列-监听到消息内容为：orderId={}", orderId);
-
-            //TODO:接下来执行核心的业务逻辑
-
             //查询该用户下单记录Id对应的支付状态是为"已保存"
             UserOrder userOrder = userOrderMapper.selectByIdAndStatus(orderId, 1);
             if (userOrder != null) {
-                //不等于null，则代表该用户下单记录已经超时没支付该笔订单了，故而需要失效该笔下单记录
+                //不等于null，则代表该用户下单记录已经超时，该笔订单未支付，故而需要使该笔下单记录失效
                 deadUserOrderService.updateUserOrderRecord(userOrder);
             }
         } catch (Exception e) {
@@ -56,44 +49,3 @@ public class DeadOrderConsumer {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

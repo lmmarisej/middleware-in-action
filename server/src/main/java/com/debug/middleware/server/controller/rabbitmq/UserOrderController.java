@@ -1,6 +1,4 @@
-package com.debug.middleware.server.controller.rabbitmq;/**
- * Created by Administrator on 2019/4/11.
- */
+package com.debug.middleware.server.controller.rabbitmq;
 
 import com.debug.middleware.api.enums.StatusCode;
 import com.debug.middleware.api.response.BaseResponse;
@@ -20,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 用户下单记录controller
  *
- * @Author:debug (SteadyJack)
- * @Date: 2019/4/11 19:05
  * @author lmmarise.j
  * @version $Id: $Id
  */
