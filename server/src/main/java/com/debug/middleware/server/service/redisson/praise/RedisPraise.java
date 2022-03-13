@@ -27,7 +27,7 @@ public class RedisPraise implements IRedisPraise {
     //定义日志
     private static final Logger log = LoggerFactory.getLogger(RedisPraise.class);
     //定义点赞博客时缓存存储时的Key
-    private static final String keyBlog = "RedisBlogPraiseMap";
+    private static final String keyBlog = "RedisBlogPraiseMap";     // 存在于Redis中的锁对象
     //创建Redisson客户端操作实例
     @Autowired
     private RedissonClient redissonClient;
@@ -42,7 +42,7 @@ public class RedisPraise implements IRedisPraise {
         //获取分布式锁实例
         RLock rLock = redissonClient.getLock(lockName);
         //尝试获取分布式锁（可重入锁）
-        boolean res = rLock.tryLock(100, 10, TimeUnit.SECONDS);
+        boolean res = rLock.tryLock(100, 10, TimeUnit.SECONDS);     // 唤醒的原理是：redis的pub/sub
         try {
             //res为true代表已经获取到了锁
             if (res) {
@@ -130,8 +130,6 @@ public class RedisPraise implements IRedisPraise {
     }
 
     /**
-     * {@inheritDoc}
-     *
      * 获得博客点赞排行榜
      */
     @Override
